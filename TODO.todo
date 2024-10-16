@@ -1,0 +1,83 @@
+# TODO - App de suivi de séance 🏋️‍♂️
+
+## 🏠 Pages principales (Front-end)
+- [ ] **Page d'accueil** (`/`) 🌟
+  - [ ] Présenter un message de bienvenue
+  - [ ] Afficher le bouton **"S'inscrire"** ou **"Se connecter"**
+  
+- [ ] **Page de Perf** (`/performances`) 📊
+  - [ ] Afficher un résumé des statistiques d’entraînement
+  - [ ] Afficher les performances récentes et graphiques
+  - [ ] Inclure des notifications de rappel pour les jours de repos ou séances prévues
+
+- [ ] **Page de Séances** (`/workouts`) 🏋️‍♂️
+  - [ ] Liste des séances d’entraînement récentes
+  - [ ] Bouton pour **Ajouter une nouvelle séance** (Création de séance)
+
+- [ ] **Page Ajouter/Modifier une Séance** (`/workouts/new` et `/workouts/edit/[id]`) ✏️
+  - [ ] Formulaire pour choisir les exercices, répétitions, séries, poids, etc.
+  - [ ] Sélection de l’intensité (RPE)
+  - [ ] Sauvegarder ou modifier la séance dans la base de données
+
+- [ ] **Page des Objectifs** (`/goals`) 🎯
+  - [ ] Créer et suivre les objectifs personnels (ex. Deadlift 200 kg)
+  - [ ] Afficher un tableau de bord des objectifs atteints et à atteindre
+
+- [ ] **Page des PRs (Personal Records)** (`/prs`) 🏆
+  - [ ] Lister les records personnels pour chaque exercice (PRs)
+  - [ ] Mettre en avant le dernier record battu
+
+- [ ] **Page Profil Utilisateur** (`/profile`) 👤
+  - [ ] Gérer les informations personnelles (nom, email)
+  - [ ] Suivi des préférences (mode d’entraînement, unités de mesure)
+
+## 🔒 Authentification
+- [ ] **Page d'inscription** (`/auth/register`) 🔑
+  - [ ] Formulaire d’inscription avec email/mot de passe
+  - [ ] Intégrer Google, GitHub, etc. (optionnel)
+  - [ ] Validation des champs d’inscription
+
+- [ ] **Page de connexion** (`/auth/login`) 🔐
+  - [ ] Formulaire de connexion avec email/mot de passe
+  - [ ] Connexion via Google, GitHub (optionnel)
+  - [ ] Message d’erreur en cas de mauvais identifiants
+
+- [ ] **Implémenter NextAuth** (Back-end)
+  - [ ] Configurer le provider d'authentification (email, Google, etc.)
+  - [ ] Protéger les pages avec `getSession` pour vérifier la connexion utilisateur
+  - [ ] Ajouter une option pour **réinitialiser le mot de passe**
+
+## 🗄️ Fonctionnalités CRUD (Back-end)
+- [ ] **Créer une base de données MongoDB/Prisma** 🛠️
+  - [ ] Schéma de la base de données pour les utilisateurs
+  - [ ] Schéma pour les séances (workouts)
+  - [ ] Schéma pour les PRs et objectifs
+  
+- [ ] **Fonctionnalités CRUD pour les séances** 🏋️
+  - [ ] Implémenter la route API pour **créer une nouvelle séance** (`POST /api/workouts`)
+  - [ ] Implémenter la route API pour **lister les séances** (`GET /api/workouts`)
+  - [ ] Implémenter la route API pour **modifier une séance** (`PUT /api/workouts/[id]`)
+  - [ ] Implémenter la route API pour **supprimer une séance** (`DELETE /api/workouts/[id]`)
+
+- [ ] **Fonctionnalités CRUD pour les PRs** 🏆
+  - [ ] Créer, lire, modifier et supprimer des PRs
+
+- [ ] **Gestion des Objectifs** 🎯
+  - [ ] Implémenter les routes API pour ajouter/modifier des objectifs personnels
+  
+## 📊 Graphiques de Performances (Utiliser Chart.js ou Recharts)
+- [ ] **Graphiques de suivi des séances** 📈
+  - [ ] Afficher l’évolution des charges soulevées dans le temps
+  - [ ] Graphiques comparatifs pour voir la progression de chaque exercice
+
+- [ ] **Graphique de suivi des PRs** 🏆
+  - [ ] Graphique qui montre l’évolution des records personnels
+  
+## 🔔 Notifications et Rappels
+- [ ] Ajouter des notifications pour rappeler à l’utilisateur les jours de repos ou séances prévues 📅
+- [ ] Notifications pour féliciter après chaque PR battu 🏆
+  
+## ⚙️ Autres tâches techniques
+- [ ] Configurer un système de **gestion d'erreurs** globales (ex. : erreurs de connexion ou d’accès à la base de données)
+- [ ] **Optimisation SEO** pour les pages publiques
+- [ ] **Tests unitaires** avec Jest et React Testing Library

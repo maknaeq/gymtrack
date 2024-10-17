@@ -12,9 +12,9 @@ const navLinks = [
 
 function Header() {
   return (
-    <header className="flex items-center justify-between p-4">
+    <header className="flex items-center justify-between px-8 py-4">
       <Link href={"/"} className="flex items-center gap-2">
-        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-100 shadow-md">
+        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-100">
           <Image src={Logo} alt="Logo" className="size-7" />
         </div>
         <h1 className="font-bold text-blue-500">Gymtrack</h1>

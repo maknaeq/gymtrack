@@ -20,9 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${dmSans.className} text-zinc-800`}>
-        <Header />
-        <main className="px-4">{children}</main>
+      <body className={`${dmSans.className} bg-slate-50/30 text-zinc-800`}>
+        <div className="mx-auto h-screen max-w-[960px]">
+          <Header />
+          <main className="px-4">{children}</main>
+        </div>
       </body>
     </html>
   );

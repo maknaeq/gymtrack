@@ -1,3 +1,3 @@
 export default function Home() {
-  return <p>Salut tout le monde</p>;
+  return <p>gymtrack</p>;
 }

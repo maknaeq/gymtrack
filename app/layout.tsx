@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${dmSans.className} text-zinc-800`}>
         <Header />
-        <main>{children}</main>
+        <main className="px-4">{children}</main>
       </body>
     </html>
   );

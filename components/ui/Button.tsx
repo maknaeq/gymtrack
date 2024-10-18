@@ -11,11 +11,13 @@ type ButtonProps = {
     | "link"
     | "outline";
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 };
 
-function Button({ variant = "primary", children }: ButtonProps) {
+function Button({ variant = "primary", type, children }: ButtonProps) {
   return (
     <button
+      type={type}
       className={twMerge(
         "btn rounded-lg bg-blue-500 px-8 text-zinc-50 hover:bg-blue-600",
         variant === "secondary" && "bg-gray-500 hover:bg-gray-600",

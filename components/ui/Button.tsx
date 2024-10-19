@@ -14,7 +14,12 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset";
 };
 
-function Button({ variant = "primary", type, children }: ButtonProps) {
+function Button({
+  variant = "primary",
+  type,
+  children,
+  ...rest
+}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type={type}
@@ -30,6 +35,7 @@ function Button({ variant = "primary", type, children }: ButtonProps) {
         variant === "outline" &&
           "border-none bg-zinc-50 text-zinc-800 hover:border-none hover:bg-zinc-100",
       )}
+      {...rest}
     >
       {children}
     </button>

@@ -7,7 +7,7 @@ import { auth, signOut } from "@/auth";
 import Button from "@/components/ui/Button";
 
 const navLinks = [
-  { title: "Séance", href: "/workout" },
+  { title: "Séances", href: "/workout" },
   { title: "Performances", href: "/performances" },
   { title: "Goals", href: "/goals" },
 ];

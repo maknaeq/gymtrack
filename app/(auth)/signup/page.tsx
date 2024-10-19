@@ -4,16 +4,27 @@ import Button from "@/components/ui/Button";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function SignIn() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    await register(formData);
-    await login(formData);
-    router.push("/workout");
+    setIsLoading(true);
+    setError(null);
+    try {
+      await register(formData);
+      await login(formData);
+      router.push("/workout");
+    } catch (e) {
+      setError("Email ou mot de passe incorrect");
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className="flex h-screen items-center justify-center bg-zinc-50/30">
@@ -61,8 +72,12 @@ function SignIn() {
             className="input input-bordered w-full"
           />
         </div>
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
         <div className="mt-3 flex flex-col space-y-2">
-          <Button type="submit">S&apos;inscrire</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Inscription..." : "S'inscrire"}
+          </Button>
           <p className="text-sm">
             Vous avez déjà un compte?{" "}
             <Link

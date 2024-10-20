@@ -11,10 +11,16 @@ export default async function Home() {
     <div className="my-20 flex justify-center">
       <div className="mt-20 max-w-[680px]">
         {session ? (
-          <h1 className="text-7xl">
-            Bienvenue,{" "}
-            <span className="font-semibold text-blue-500">{username}</span>
-          </h1>
+          <>
+            <h1 className="text-7xl">
+              Bienvenue,{" "}
+              <span className="font-semibold text-blue-500">{username}</span>
+            </h1>
+            <p>
+              Choisissez une rubrique dans la barre de navigation pour avoir
+              accès à vos données
+            </p>
+          </>
         ) : (
           <>
             <h1 className="text-7xl">

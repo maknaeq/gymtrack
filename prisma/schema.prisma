@@ -14,9 +14,106 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  password String
+  id        String   @id @default(uuid())  // Utilise un UUID généré automatiquement
+  name      String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
+
+  // Relations
+  workouts  Workout[]
+  prs       PR[]
+  goals     Goal[]
+
+  @@map("users")
+}
+
+model Workout {
+  id        String   @id @default(uuid())  // UUID pour chaque séance
+  userId    String
+  date      DateTime
+  duration  Int?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id])
+  exercises WorkoutExercise[]
+  sessionLogs SessionLog[]
+
+  @@map("workouts")
+}
+
+model Exercise {
+  id          String   @id @default(uuid())  // UUID pour chaque exercice
+  name        String
+  muscleGroup String?
+
+  // Relations
+  workouts    WorkoutExercise[]
+  prs         PR[]
+  goals       Goal[]
+
+  @@map("exercises")
+}
+
+model WorkoutExercise {
+  id         String   @id @default(uuid())  // UUID pour chaque relation Workout-Exercise
+  workoutId  String
+  exerciseId String
+  sets       Int
+  reps       Int
+  weight     Float?
+  rpe        Float?
+
+  // Relations
+  workout    Workout  @relation(fields: [workoutId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@map("workout_exercises")
+}
+
+model PR {
+  id         String   @id @default(uuid())  // UUID pour chaque record personnel
+  userId     String
+  exerciseId String
+  weight     Float
+  date       DateTime
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user       User     @relation(fields: [userId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@map("prs")
+}
+
+model Goal {
+  id         String   @id @default(uuid())  // UUID pour chaque objectif
+  userId     String
+  exerciseId String
+  targetWeight Float
+  deadline   DateTime?
+  isAchieved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user       User     @relation(fields: [userId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@map("goals")
+}
+
+model SessionLog {
+  id          String   @id @default(uuid())  // UUID pour chaque log de séance
+  workoutId   String
+  energyLevel Int
+  fatigueLevel Int
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  workout     Workout  @relation(fields: [workoutId], references: [id])
+
+  @@map("session_logs")
 }

@@ -42,8 +42,11 @@ async function Header() {
       </nav>
       {session ? (
         <div className="hidden items-center gap-2 md:flex">
-          <div className="avatar placeholder size-10">
-            <div className="w-24 rounded-full bg-zinc-100 ring-offset-2 ring-offset-base-100 transition-all ease-out hover:ring hover:ring-primary">
+          <div
+            className="avatar placeholder dropdown dropdown-end size-10"
+            tabIndex={0}
+          >
+            <div className="rounded-full bg-zinc-100 ring-offset-2 ring-offset-base-100 transition-all ease-out hover:ring hover:ring-primary">
               {/* <Image
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 alt="avatar"
@@ -52,18 +55,23 @@ async function Header() {
               /> */}
               <span>{session.user?.name?.charAt(0)}</span>
             </div>
+            <form
+              className="menu dropdown-content z-[1] rounded-box border bg-base-100 p-1"
+              tabIndex={0}
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/" });
+              }}
+            >
+              <Button
+                type="submit"
+                variant="ghost"
+                className="flex items-center gap-2 rounded-box p-3 hover:bg-zinc-50"
+              >
+                <ExitIcon /> Déconnexion
+              </Button>
+            </form>
           </div>
-          <form
-            className="hidden md:block"
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          >
-            <Button type="submit" variant="ghost">
-              <ExitIcon />
-            </Button>
-          </form>
         </div>
       ) : (
         <div className="hidden md:block"></div>

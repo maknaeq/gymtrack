@@ -28,10 +28,12 @@ model User {
   @@map("users")
 }
 
+
 model Workout {
   id        String   @id @default(uuid())  // UUID pour chaque séance
   userId    String
   date      DateTime
+  type      String
   duration  Int?
   notes     String?
   createdAt DateTime @default(now())

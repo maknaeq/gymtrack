@@ -10,7 +10,7 @@ type ButtonProps = {
     | "warning"
     | "link"
     | "outline";
-  children: React.ReactNode;
+  children?: React.ReactNode;
   type?: "button" | "submit" | "reset";
 };
 

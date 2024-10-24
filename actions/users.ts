@@ -45,3 +45,10 @@ export async function login(formData: FormData) {
 export async function getUsers() {
   return await db.user.findMany();
 }
+
+export async function getUserByEmail(email: string) {
+  return await db.user.findUnique({
+    where: { email },
+    select: { id: true, name: true, email: true },
+  });
+}

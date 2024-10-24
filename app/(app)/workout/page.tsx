@@ -1,18 +1,14 @@
-import React from "react";
-import { getUsers } from "@/actions/users";
+import { getUserByEmail } from "@/actions/users";
+import { auth } from "@/auth";
+import CalendarLayout from "@/components/CalendarLayout";
 
 async function Workout() {
-  const users = await getUsers();
+  const session = await auth();
+  const user = await getUserByEmail(session?.user?.email as string);
+
   return (
     <div>
-      Workout
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.email}
-          </li>
-        ))}
-      </ul>
+      <CalendarLayout user={user} />
     </div>
   );
 }

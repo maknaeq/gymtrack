@@ -18,9 +18,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/workout", origin));
   }
 
-  console.log("session", session);
-  console.log("pathname", pathname);
-
   return NextResponse.next();
 }
 

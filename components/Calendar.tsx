@@ -17,11 +17,6 @@ function Calendar({
         timeZone="Europe/Paris"
         selected={selected}
         onSelect={setSelected}
-        footer={
-          selected
-            ? `Selected: ${selected.toLocaleDateString()}`
-            : "Pick a day."
-        }
       />
     </div>
   );

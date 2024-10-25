@@ -7,7 +7,7 @@ import { auth, signOut } from "@/auth";
 import Button from "@/components/ui/Button";
 
 const navLinks = [
-  { title: "Séances", href: "/workout" },
+  { title: "Séances", href: "/sessions" },
   { title: "Performances", href: "/performances" },
   { title: "Goals", href: "/goals" },
 ];
@@ -41,7 +41,7 @@ async function Header() {
         <HamburgerMenuIcon className="size-5" />
       </nav>
       {session ? (
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden cursor-pointer items-center gap-2 md:flex">
           <div
             className="avatar placeholder dropdown dropdown-end size-10"
             tabIndex={0}

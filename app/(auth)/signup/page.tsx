@@ -18,7 +18,7 @@ function SignIn() {
     try {
       await register(formData);
       await login(formData);
-      router.push("/workout");
+      router.push("/sessions");
     } catch (e) {
       setError("Email ou mot de passe incorrect");
       console.error(e);

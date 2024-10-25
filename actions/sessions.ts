@@ -20,6 +20,14 @@ export async function createWorkout({
         user: { connect: { id: userId } },
       },
     });
+    //return the id of the workout
+    return await db.workout.findFirst({
+      where: {
+        type,
+        date: dateObj,
+        userId,
+      },
+    });
   } catch (error) {
     console.error(error);
     throw new Error("Impossible de créer l'entrainement");
@@ -59,6 +67,14 @@ export async function getWorkoutByUserId(userId: string) {
   return await db.workout.findMany({
     where: {
       userId,
+    },
+  });
+}
+
+export async function deleteWorkout(workoutId: string) {
+  return await db.workout.delete({
+    where: {
+      id: workoutId,
     },
   });
 }

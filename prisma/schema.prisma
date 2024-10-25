@@ -49,6 +49,8 @@ model Workout {
 model Exercise {
   id          String   @id @default(uuid())  // UUID pour chaque exercice
   name        String
+  weightUnit  String?
+  repUnit     String?
   muscleGroup String?
 
   // Relations

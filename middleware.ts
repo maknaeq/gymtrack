@@ -15,12 +15,12 @@ export async function middleware(req: NextRequest) {
   }
 
   if (session && pathname === "/") {
-    return NextResponse.redirect(new URL("/workout", origin));
+    return NextResponse.redirect(new URL("/sessions", origin));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/workout", "/performances", "/goals", "/login", "/signup"],
+  matcher: ["/", "/sessions", "/performances", "/goals", "/login", "/signup"],
 };

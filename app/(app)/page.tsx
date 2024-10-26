@@ -9,7 +9,7 @@ export default async function Home() {
     session.user.name.charAt(0).toUpperCase() + session.user.name.slice(1);
   return (
     <div className="my-20 flex justify-center">
-      <div className="mt-20 max-w-[680px]">
+      <div className="mt-20 max-w-[640px]">
         {session ? (
           <>
             <h1 className="text-7xl">

@@ -59,6 +59,14 @@ export async function getUserWorkoutByDate({
   });
 }
 
+export async function getWorkoutById(workoutId: string) {
+  return await db.workout.findUnique({
+    where: {
+      id: workoutId,
+    },
+  });
+}
+
 export async function getWorkouts() {
   return await db.workout.findMany();
 }

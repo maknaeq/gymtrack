@@ -12,12 +12,14 @@ type ButtonProps = {
     | "outline";
   children?: React.ReactNode;
   type?: "button" | "submit" | "reset";
+  className?: string;
 };
 
 function Button({
   variant = "primary",
   type,
   children,
+  className,
   ...rest
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
@@ -32,8 +34,8 @@ function Button({
         variant === "success" && "bg-green-500 hover:bg-green-600",
         variant === "warning" && "bg-yellow-500 hover:bg-yellow-600",
         variant === "link" && "bg-transparent hover:bg-transparent",
-        variant === "outline" &&
-          "border-none bg-zinc-50 text-zinc-800 hover:border-none hover:bg-zinc-100",
+        variant === "outline" && "bg-zinc-50 text-zinc-800 hover:bg-zinc-100",
+        className,
       )}
       {...rest}
     >

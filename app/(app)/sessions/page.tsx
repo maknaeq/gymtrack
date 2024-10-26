@@ -7,7 +7,7 @@ async function Workout() {
   const user = await getUserByEmail(session?.user?.email as string);
 
   return (
-    <div className="mt-8">
+    <div>
       <CalendarLayout user={user} />
     </div>
   );

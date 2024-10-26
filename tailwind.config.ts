@@ -7,6 +7,22 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    extend: {
+      animation: {
+        "shake-strong": "tilt-shaking 0.15s infinite",
+      },
+      keyframes: {
+        "tilt-shaking": {
+          "0%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(5deg)" },
+          "50%": { transform: "rotate(0deg)" },
+          "75%": { transform: "rotate(-5deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+      },
+    },
+  },
   daisyui: {
     themes: ["light"],
   },

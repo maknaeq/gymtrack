@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={`${dmSans.className} bg-slate-50/30 text-zinc-800`}>
         <div className="mx-auto h-screen max-w-[960px]">
           <Header />
-          <main className="px-4">{children}</main>
+          <main className="my-4 px-8">{children}</main>
         </div>
       </body>
     </html>

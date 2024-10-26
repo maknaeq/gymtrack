@@ -18,58 +18,58 @@ export type Workout = {
   duration: number | null;
   notes: string | null;
   createdAt: Date;
-};
+} | null;
 
-const exercices = {
-  upperBody: [
-    "Développé couché",
-    "Pompes",
-    "Tirage vertical",
-    "Rowing avec haltères",
-    "Élévations latérales",
-    "Développé militaire",
-    "Curls biceps",
-    "Extensions triceps",
-    "Face pulls",
-    "Dips",
-  ],
-  lowerBody: [
-    "Squat",
-    "Fentes",
-    "Presse à cuisses",
-    "Soulevé de terre",
-    "Soulevé de terre jambes tendues",
-    "Extension des jambes",
-    "Flexion des ischio-jambiers",
-    "Pont fessier",
-    "Élévation des mollets",
-    "Step-ups",
-  ],
-  fullBody: [
-    "Burpees",
-    "Thrusters",
-    "Soulevé de terre",
-    "Kettlebell swings",
-    "Snatch",
-    "Clean & Jerk",
-    "Push Press",
-    "Mountain Climbers",
-    "Sauts sur box",
-    "Renegade Rows",
-  ],
-  cardio: [
-    "Course à pied",
-    "Vélo",
-    "Rameur",
-    "Corde à sauter",
-    "Natation",
-    "Marche",
-    "HIIT",
-    "Zumba",
-    "Aérobic",
-    "Boxe",
-  ],
-};
+// const exercices = {
+//   upperBody: [
+//     "Développé couché",
+//     "Pompes",
+//     "Tirage vertical",
+//     "Rowing avec haltères",
+//     "Élévations latérales",
+//     "Développé militaire",
+//     "Curls biceps",
+//     "Extensions triceps",
+//     "Face pulls",
+//     "Dips",
+//   ],
+//   lowerBody: [
+//     "Squat",
+//     "Fentes",
+//     "Presse à cuisses",
+//     "Soulevé de terre",
+//     "Soulevé de terre jambes tendues",
+//     "Extension des jambes",
+//     "Flexion des ischio-jambiers",
+//     "Pont fessier",
+//     "Élévation des mollets",
+//     "Step-ups",
+//   ],
+//   fullBody: [
+//     "Burpees",
+//     "Thrusters",
+//     "Soulevé de terre",
+//     "Kettlebell swings",
+//     "Snatch",
+//     "Clean & Jerk",
+//     "Push Press",
+//     "Mountain Climbers",
+//     "Sauts sur box",
+//     "Renegade Rows",
+//   ],
+//   cardio: [
+//     "Course à pied",
+//     "Vélo",
+//     "Rameur",
+//     "Corde à sauter",
+//     "Natation",
+//     "Marche",
+//     "HIIT",
+//     "Zumba",
+//     "Aérobic",
+//     "Boxe",
+//   ],
+// };
 
 export type ExerciseType = "upperBody" | "lowerBody" | "fullBody" | "cardio";
 
@@ -79,9 +79,8 @@ function CalendarLayout({ user }: { user: User | null }) {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [selected, setSelected] = useState<Date>(currentDate);
   const [loading, setLoading] = useState(true);
-  const [type, setType] = useState<ExerciseType | null>(null);
   const [open, setOpen] = useState(false);
-  const [workoutId, setWorkoutId] = useState(null);
+  const [workoutId, setWorkoutId] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -109,11 +108,42 @@ function CalendarLayout({ user }: { user: User | null }) {
     const workout = await createWorkout({ type, date, userId });
     router.refresh();
     setOpen(true);
-    const workoutId = workout.id;
-    setWorkoutId(workoutId);
+    const workoutId = workout?.id;
+    if (workoutId) setWorkoutId(workoutId);
   }
   return (
     <div className="space-y-8">
+      <dialog id="my_modal_1" className={`modal ${open ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">
+            Tu veins de créer une <span className="text-blue-500">séance!</span>{" "}
+            💪
+          </h3>
+          <p className="py-4">
+            À présent, tu peux ajouter des exercices à cette séance pour la
+            rendre plus complète ou les ajouter plus tard.
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" onClick={() => setOpen(false)}>
+                  Plus tard
+                </Button>
+                <Button
+                  onClick={() => {
+                    setOpen(false);
+                    router.push(`/sessions/${workoutId}`);
+                  }}
+                  className="hover:animate-shake-strong"
+                >
+                  🔥 Ajouter
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
       <div className="flex items-start gap-12">
         <Calendar selected={selected} setSelected={setSelected} />
         <div className="w-full">
@@ -133,7 +163,6 @@ function CalendarLayout({ user }: { user: User | null }) {
                 className="select select-bordered w-full"
                 required
                 defaultValue={"Selectionner un type d'entrainement"}
-                onChange={(e) => setType(e.target.value as ExerciseType)}
               >
                 <option disabled>
                   Selectionner un type d&apos;entrainement
@@ -144,28 +173,6 @@ function CalendarLayout({ user }: { user: User | null }) {
                 <option value="cardio">Cardio</option>
               </select>
             </div>
-
-            {/* <div>
-              <label htmlFor="exercice" className="label label-text">
-                Exercice
-              </label>
-              <select
-                name="exercice"
-                id="exercice"
-                className="select select-bordered w-full"
-                defaultValue={type === null ? "Selectionner un exercice" : ""}
-                disabled={type === null}
-              >
-                <option disabled>Selectionner un exercice</option>
-                {exercices !== null &&
-                  type !== null &&
-                  exercices[type]?.map((exercice) => (
-                    <option key={exercice} value={exercice}>
-                      {exercice}
-                    </option>
-                  ))}
-              </select>
-            </div> */}
 
             <div>
               <label htmlFor="date" className="label label-text">
@@ -207,46 +214,13 @@ function CalendarLayout({ user }: { user: User | null }) {
             className="space-y-2"
           >
             {workouts.map((workout) => (
-              <Reorder.Item key={workout.id} value={workout}>
+              <Reorder.Item key={workout?.id} value={workout}>
                 <CardWorkout workout={workout} />
               </Reorder.Item>
             ))}
           </Reorder.Group>
         )}
       </div>
-      <dialog
-        id="my_modal_1"
-        className={`modal ${open && "modal-open"} cursor-auto`}
-      >
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">
-            Tu veins de créer une <span className="text-blue-500">séance!</span>{" "}
-            💪
-          </h3>
-          <p className="py-4">
-            À présent, tu peux ajouter des exercices à cette séance pour la
-            rendre plus complète ou les ajouter plus tard.
-          </p>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" onClick={() => setOpen(false)}>
-                  Plus tard
-                </Button>
-                <Button
-                  onClick={() => {
-                    setOpen(false);
-                    router.push(`/sessions/${workoutId}`);
-                  }}
-                >
-                  🔥 Ajouter
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </dialog>
     </div>
   );
 }

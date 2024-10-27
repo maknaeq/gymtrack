@@ -57,6 +57,7 @@ function AddExercise({
                 duration,
                 description,
               });
+              setOpen(false);
               router.refresh();
               form.current?.reset();
               setSelectedExerciseId(null);
@@ -72,11 +73,9 @@ function AddExercise({
               name="name"
               className="select select-bordered w-full"
               onChange={handleSelectChange}
-              defaultValue={"Sélectionner un exercice"}
+              required
             >
-              <option value="Sélectionner un exercice" disabled>
-                Sélectionner un exercice
-              </option>
+              <option value="">-- Sélectionner un exercice --</option>
               {exercices?.map((exercice) => (
                 <option
                   key={exercice.id}
@@ -108,6 +107,7 @@ function AddExercise({
                       name="sets"
                       placeholder="3"
                       className="input input-bordered w-full"
+                      required
                     />
                   </div>
                   <div className="grow">
@@ -122,6 +122,7 @@ function AddExercise({
                       name="reps"
                       placeholder="12"
                       className="input input-bordered w-full"
+                      required
                     />
                   </div>
                 </div>
@@ -136,6 +137,7 @@ function AddExercise({
                   name="weight"
                   placeholder="0"
                   className="input input-bordered w-full"
+                  required
                 />
               </>
             ) : (
@@ -151,6 +153,7 @@ function AddExercise({
                   name="duration"
                   placeholder="0"
                   className="input input-bordered w-full"
+                  required
                 />
               </>
             )}
@@ -181,9 +184,6 @@ function AddExercise({
                 </Button>
                 <Button
                   form="form"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
                   className="hover:animate-shake-strong"
                   type="submit"
                 >

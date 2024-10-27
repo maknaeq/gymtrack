@@ -163,10 +163,9 @@ function CalendarLayout({ user }: { user: User | null }) {
                 id="type"
                 className="select select-bordered w-full"
                 required
-                defaultValue={"Selectionner un type d'entrainement"}
               >
-                <option disabled>
-                  Selectionner un type d&apos;entrainement
+                <option value="">
+                  -- Selectionner un type d&apos;entrainement --
                 </option>
                 <option value="upperBody">Haut du corps</option>
                 <option value="lowerBody">Bas du corps</option>

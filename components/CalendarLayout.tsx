@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Calendar from "./Calendar";
 import "react-day-picker/style.css";
 import Button from "@/components/ui/Button";
@@ -81,6 +81,7 @@ function CalendarLayout({ user }: { user: User | null }) {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [workoutId, setWorkoutId] = useState("");
+  const form = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -110,6 +111,7 @@ function CalendarLayout({ user }: { user: User | null }) {
     setOpen(true);
     const workoutId = workout?.id;
     if (workoutId) setWorkoutId(workoutId);
+    form.current?.reset();
   }
   return (
     <div className="space-y-8 pb-4">

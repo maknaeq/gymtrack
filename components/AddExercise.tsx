@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "./ui/Button";
 import { createExercice } from "@/actions/exercice";
 import { useRouter } from "next/navigation";
@@ -14,15 +14,18 @@ type Exercise = {
 function AddExercise({
   exercices,
   workoutId,
+  workoutType,
 }: {
   exercices: Exercise[] | null;
   workoutId: string;
+  workoutType: string;
 }) {
   const [open, setOpen] = useState(false);
   const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(
     null,
   );
   const router = useRouter();
+  const form = useRef<HTMLFormElement | null>(null);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.options[e.target.selectedIndex];
@@ -35,6 +38,7 @@ function AddExercise({
           <form
             className="form-control"
             id="form"
+            ref={form}
             onSubmit={async (e) => {
               e.preventDefault();
               const formData = new FormData(e.target as HTMLFormElement);
@@ -43,15 +47,19 @@ function AddExercise({
               const reps = Number(formData.get("reps")) || 0;
               const weight = Number(formData.get("weight")) || 0;
               const description = formData.get("description") as string;
+              const duration = Number(formData.get("duration")) || 0;
               await createExercice({
                 workoutId,
                 exerciceId,
                 sets,
                 reps,
                 weight,
+                duration,
                 description,
               });
               router.refresh();
+              form.current?.reset();
+              setSelectedExerciseId(null);
             }}
           >
             <div className="label">
@@ -85,43 +93,67 @@ function AddExercise({
               name="exerciseId"
               value={selectedExerciseId || ""}
             />
-
-            <div className="label">
-              <label htmlFor="series" className="label-text">
-                Séries
-              </label>
-            </div>
-            <input
-              type="number"
-              id="series"
-              name="sets"
-              placeholder="3"
-              className="input input-bordered w-full"
-            />
-            <div className="label">
-              <label htmlFor="reps" className="label-text">
-                Répétitions
-              </label>
-            </div>
-            <input
-              type="number"
-              id="reps"
-              name="reps"
-              placeholder="12"
-              className="input input-bordered w-full"
-            />
-            <div className="label">
-              <label htmlFor="weight" className="label-text">
-                Poids (kg)
-              </label>
-            </div>
-            <input
-              type="number"
-              id="weight"
-              name="weight"
-              placeholder="0"
-              className="input input-bordered w-full"
-            />
+            {workoutType !== "cardio" ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <div className="grow">
+                    <div className="label">
+                      <label htmlFor="series" className="label-text">
+                        Séries
+                      </label>
+                    </div>
+                    <input
+                      type="number"
+                      id="series"
+                      name="sets"
+                      placeholder="3"
+                      className="input input-bordered w-full"
+                    />
+                  </div>
+                  <div className="grow">
+                    <div className="label">
+                      <label htmlFor="reps" className="label-text">
+                        Répétitions
+                      </label>
+                    </div>
+                    <input
+                      type="number"
+                      id="reps"
+                      name="reps"
+                      placeholder="12"
+                      className="input input-bordered w-full"
+                    />
+                  </div>
+                </div>
+                <div className="label">
+                  <label htmlFor="weight" className="label-text">
+                    Poids (kg)
+                  </label>
+                </div>
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  placeholder="0"
+                  className="input input-bordered w-full"
+                />
+              </>
+            ) : (
+              <>
+                <div className="label">
+                  <label htmlFor="duration" className="label-text">
+                    Durée (minutes)
+                  </label>
+                </div>
+                <input
+                  type="number"
+                  id="duration"
+                  name="duration"
+                  placeholder="0"
+                  className="input input-bordered w-full"
+                />
+              </>
+            )}
             <div className="label">
               <label htmlFor="desc" className="label-text">
                 Note (optionel)
@@ -137,7 +169,14 @@ function AddExercise({
           <div className="modal-action">
             <form method="dialog">
               <div className="flex items-center gap-1">
-                <Button variant="ghost" onClick={() => setOpen(false)}>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setOpen(false);
+                    form.current?.reset();
+                    setSelectedExerciseId(null);
+                  }}
+                >
                   Annuler
                 </Button>
                 <Button

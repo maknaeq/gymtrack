@@ -37,7 +37,11 @@ async function page({ params }: { params: { id: string } }) {
         </p>
         <div className="mx-auto mt-10 flex max-w-[640px] items-center justify-between">
           <h1 className="text-2xl font-bold">Exercices</h1>
-          <AddExercise exercices={availableExercises} workoutId={params.id} />
+          <AddExercise
+            exercices={availableExercises}
+            workoutId={params.id}
+            workoutType={workoutSession?.type as string}
+          />
         </div>
       </div>
       <div>

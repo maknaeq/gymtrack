@@ -23,9 +23,11 @@ export async function getSessionExercices({
     return {
       id: we.id,
       name: exercice?.name,
+      type: exercice?.type,
       sets: we.sets,
       reps: we.reps,
       weight: we.weight,
+      duration: we.duration,
       description: we.description,
       rpe: we.rpe,
     };

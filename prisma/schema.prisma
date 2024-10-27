@@ -73,7 +73,7 @@ model WorkoutExercice {
 
   // Relations
   workout    Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
-  exercice   Exercice @relation(fields: [exerciceId], references: [id])
+  exercice   Exercice @relation(fields: [exerciceId], references: [id], onDelete: Cascade)
 
   @@map("workout_exercices")
 }

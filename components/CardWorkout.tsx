@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Workout } from "@/components/CalendarLayout";
-import abs from "@/public/images/abs.png";
-import back from "@/public/images/back.png";
-import biceps from "@/public/images/biceps.png";
-import calves from "@/public/images/calves.png";
-import chest from "@/public/images/chest.png";
-import hamstring from "@/public/images/hamstring.png";
-import lowerBack from "@/public/images/lowerBack.png";
-import quads from "@/public/images/quads.png";
-import shoulder from "@/public/images/shoulder.png";
-import Image, { StaticImageData } from "next/image";
 import {
   ArrowTopRightIcon,
   DragHandleDots2Icon,
@@ -27,9 +17,11 @@ type WorkoutType = "lowerBody" | "upperBody" | "fullBody" | "cardio";
 type Exercice = {
   id: string;
   name: string | undefined;
-  sets: number;
-  reps: number;
+  type: string | undefined;
+  sets: number | null;
+  reps: number | null;
   weight: number | null;
+  duration: number | null;
   description: string | null;
   rpe: number | null;
 }[];
@@ -135,14 +127,18 @@ function CardWorkout({ workout }: { workout: Workout }) {
                   <div className="flex items-center gap-2">
                     <p className="font-semibold">{exercice.name}</p>
                     <p>
-                      {exercice.sets}x{exercice.reps}
+                      {exercice.type === "cardio"
+                        ? exercice.duration + " min"
+                        : exercice.sets + "x" + exercice.reps}
                     </p>
                   </div>
                   <p className="ml-4 text-sm text-slate-500">
                     {exercice.description}
                   </p>
                 </div>
-                <p className="font-bold">{exercice.weight} kg</p>
+                {exercice.type !== "cardio" && (
+                  <p className="font-bold">{exercice.weight} kg</p>
+                )}
               </div>
             ))}
           </div>

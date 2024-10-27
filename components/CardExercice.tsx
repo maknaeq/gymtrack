@@ -1,8 +1,10 @@
 "use client";
-import { ArrowRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import Button from "./ui/Button";
 import { findUserPrsByExerciseId } from "@/actions/prs";
+import { deleteWorkoutExerciceById } from "@/actions/exercice";
+import { useRouter } from "next/navigation";
 
 type Exercice = {
   id: string;
@@ -10,12 +12,13 @@ type Exercice = {
   type?: string | undefined;
   muscleGroup?: string | null | undefined;
   weight: number | null;
-  sets: number;
-  reps: number;
+  sets: number | null;
+  reps: number | null;
   workoutId: string;
   description: string | null;
   exerciceId: string;
   rpe: number | null;
+  duration: number | null;
 };
 
 type Pr = {
@@ -35,8 +38,8 @@ function CardExercice({
   userId: string | undefined;
 }) {
   const [pr, setPr] = useState<Pr>([]);
-  console.log(pr);
-
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     const fetchPr = async () => {
       try {
@@ -58,22 +61,46 @@ function CardExercice({
           <h3 className="font-bold">{exercice.name}</h3>
           <div className={exercice.description ? "space-y-2" : ""}>
             <div className="flex items-center gap-2">
-              <p className="font-semibold text-blue-500">{exercice.weight}kg</p>
-              <ArrowRightIcon />
-              <p>
-                {exercice.sets} x{" "}
-                {exercice.reps > 1
-                  ? exercice.reps + "reps"
-                  : exercice.reps + "rep"}
-              </p>
+              {exercice.type !== "cardio" ? (
+                <>
+                  <p className="font-semibold text-blue-500">
+                    {exercice.weight}kg
+                  </p>
+                  <ArrowRightIcon />
+                  <p>
+                    {exercice.sets} x{" "}
+                    {exercice.reps && exercice.reps > 1
+                      ? exercice.reps + "reps"
+                      : exercice.reps + "rep"}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-blue-500">{exercice.duration} min</p>
+              )}
             </div>
-            <p className="text-slate-400/60">
+            <p className="px-4 text-slate-400/60">
               {exercice.description && exercice.description}
             </p>
           </div>
         </div>
-        <Button variant="ghost" className="px-5 py-1 shadow-none">
-          <DotsHorizontalIcon />
+        <Button
+          variant="ghost"
+          className="px-5 py-1 shadow-none"
+          disabled={isDeleting}
+          onClick={async () => {
+            setIsDeleting(true);
+            await deleteWorkoutExerciceById(exercice.id);
+            setTimeout(() => {
+              setIsDeleting(false);
+              router.refresh();
+            }, 1000);
+          }}
+        >
+          {!isDeleting ? (
+            <TrashIcon />
+          ) : (
+            <ReloadIcon className="animate-spin" />
+          )}
         </Button>
       </li>
       <p>{pr.length > 0 ? "PR actuel: " + pr[0].weight + "kg" : ""}</p>

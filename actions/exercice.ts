@@ -7,6 +7,7 @@ export async function createExercice({
   sets,
   reps,
   weight,
+  duration,
   description,
 }: {
   workoutId: string;
@@ -14,6 +15,7 @@ export async function createExercice({
   sets: number;
   reps: number;
   weight: number;
+  duration: number;
   description: string;
 }) {
   try {
@@ -24,8 +26,9 @@ export async function createExercice({
         sets,
         reps,
         weight,
-        description,
         rpe: 0,
+        duration,
+        description,
       },
     });
   } catch (error) {
@@ -58,8 +61,37 @@ export async function getExercicesByWorkoutId(workoutId: string) {
   return workoutExercices.map((we) => {
     const exercice = exercices.find((e) => e.id === we.exerciceId);
     return {
-      ...we,
-      ...exercice,
+      id: we.id,
+      workoutId: we.workoutId,
+      exerciceId: we.exerciceId,
+      name: exercice?.name,
+      sets: we.sets,
+      reps: we.reps,
+      weight: we.weight,
+      description: we.description,
+      rpe: we.rpe,
+      duration: we.duration,
+      type: exercice?.type,
     };
   });
+}
+
+export async function deleteWorkoutExerciceById(id: string) {
+  const exercice = await db.workoutExercice.findUnique({
+    where: { id },
+  });
+
+  if (!exercice) {
+    throw new Error("Exercice not found");
+  }
+  try {
+    return await db.workoutExercice.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    console.error("Delete Error Details:", error); // Log full error
+    throw new Error("Impossible de supprimer l'exercice");
+  }
 }

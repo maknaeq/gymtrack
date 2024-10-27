@@ -64,10 +64,11 @@ model WorkoutExercice {
   id         String   @id @default(uuid())  // UUID pour chaque relation Workout-Exercise
   workoutId  String
   exerciceId String
-  sets       Int
-  reps       Int
+  sets       Int?
+  reps       Int?
   weight     Float?
   rpe        Float?
+  duration   Int?
   description String?
 
   // Relations

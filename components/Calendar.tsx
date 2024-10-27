@@ -8,6 +8,7 @@ function Calendar({
   selected: Date;
   setSelected: (date: Date) => void;
 }) {
+  const today = new Date();
   return (
     <div>
       <DayPicker
@@ -17,6 +18,13 @@ function Calendar({
         timeZone="Europe/Paris"
         selected={selected}
         onSelect={setSelected}
+        //gray out past days
+        modifiers={{
+          past: (date) => date < today,
+        }}
+        modifiersClassNames={{
+          past: "text-gray-400",
+        }}
       />
     </div>
   );

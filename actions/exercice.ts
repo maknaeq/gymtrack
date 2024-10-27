@@ -76,6 +76,21 @@ export async function getExercicesByWorkoutId(workoutId: string) {
   });
 }
 
+export async function getWorkoutExerciceById(id: string) {
+  const exercice = await db.workoutExercice.findUnique({
+    where: { id },
+  });
+  if (!exercice) {
+    throw new Error("Exercice not found");
+  }
+  //return the workoutExercice with there exercice name joined by the exerciceId
+  return {
+    ...exercice,
+    name: (await db.exercice.findUnique({ where: { id: exercice.exerciceId } }))
+      ?.name, // get the exercice name
+  };
+}
+
 export async function deleteWorkoutExerciceById(id: string) {
   const exercice = await db.workoutExercice.findUnique({
     where: { id },

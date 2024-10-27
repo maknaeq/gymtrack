@@ -5,7 +5,7 @@ import {
   ReloadIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./ui/Button";
 import { findUserPrsByExerciseId } from "@/actions/prs";
 import {
@@ -13,6 +13,7 @@ import {
   updateWorkoutExercice,
 } from "@/actions/exercice";
 import { useRouter } from "next/navigation";
+import { fi } from "date-fns/locale";
 
 type Exercice = {
   id: string;
@@ -38,36 +39,22 @@ type Pr = {
   createdAt: Date;
 }[];
 
-type ExerciceList =
-  | {
-      id: string;
-      type: string;
-      name: string;
-      muscleGroup: string | null;
-    }[]
-  | null;
-
 function CardExercice({
+  availableExercises,
   exercice,
-  exercicesList,
   userId,
 }: {
   exercice: Exercice;
   userId: string | undefined;
-  exercicesList: ExerciceList;
+  availableExercises: Exercice[];
 }) {
   const [pr, setPr] = useState<Pr>([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [open, setOpen] = useState(false);
-  const [selectedExerciseId, setSelectedExerciseId] = useState<string | null>(
-    exercice.exerciceId,
-  );
-  const form = React.useRef<HTMLFormElement | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const form = useRef<HTMLFormElement | null>(null);
   const router = useRouter();
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    setSelectedExerciseId(selectedOption.getAttribute("data-id"));
-  };
+
   useEffect(() => {
     const fetchPr = async () => {
       try {
@@ -82,167 +69,156 @@ function CardExercice({
     };
     fetchPr();
   }, [userId, exercice.exerciceId]);
-  console.log("oui", exercice.name);
-  console.log("exo list", exercicesList);
+
+  const formId = `update-form-${exercice.id}`;
+  const modalId = `modal-${exercice.id}`;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get(`name-update-${exercice.id}`) as string;
+    const sets = Number(formData.get(`sets-update-${exercice.id}`));
+    const reps = Number(formData.get(`reps-update-${exercice.id}`));
+    const weight = Number(formData.get(`weight-update-${exercice.id}`));
+    const duration = Number(formData.get(`duration-update-${exercice.id}`));
+    const description = formData.get(
+      `description-update-${exercice.id}`,
+    ) as string;
+
+    try {
+      setIsUpdating(true);
+
+      await updateWorkoutExercice({
+        id: exercice.id,
+        workoutId: exercice.workoutId,
+        exerciceId: name,
+        sets,
+        reps,
+        weight,
+        duration,
+        description,
+      });
+      setTimeout(() => {
+        setIsUpdating(false);
+        setOpen(false);
+        router.refresh();
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+      setIsUpdating(false);
+    } finally {
+      form.current?.reset();
+    }
+  };
+
   return (
     <>
-      <dialog id="my_modal_1" className={`modal ${open ? "modal-open" : ""}`}>
+      <dialog id={modalId} className={`modal ${open ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <form
-            className="form-control"
-            id="update-form"
-            ref={form}
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target as HTMLFormElement);
-              const exerciceId = formData.get("exerciseId") as string;
-              const sets = Number(formData.get("sets")) || 0;
-              const reps = Number(formData.get("reps")) || 0;
-              const weight = Number(formData.get("weight")) || 0;
-              const description = formData.get("description") as string;
-              const duration = Number(formData.get("duration")) || 0;
-              await updateWorkoutExercice({
-                id: exercice.id,
-                workoutId: exercice.workoutId,
-                exerciceId,
-                sets,
-                reps,
-                weight,
-                duration,
-                description,
-              });
-              setOpen(false);
-              router.refresh();
-              form.current?.reset();
-              setSelectedExerciseId(null);
-            }}
-          >
-            <div className="label">
-              <label htmlFor="name" className="label-text">
-                Nom de l&apos;exercice
-              </label>
-            </div>
-            <select
-              id="name"
-              name="name"
-              className="select select-bordered w-full"
-              onChange={handleSelectChange}
-              required
-              defaultValue={exercice.name as string}
-            >
-              <option value="">-- Sélectionner un exercice --</option>
-              {exercicesList?.map((exo) => (
-                <option key={exo.id} value={exo.name} data-id={exo.id}>
-                  {exo.name}
-                </option>
-              ))}
-            </select>
-
-            <input
-              type="hidden"
-              name="exerciseId"
-              defaultValue={selectedExerciseId || ""}
-            />
+          <h3 className="text-lg font-bold">Edition</h3>
+          <form onSubmit={handleSubmit} id={formId} ref={form}>
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text">Nom de l&apos;exercice</span>
+              </div>
+              <select
+                name={`name-update-${exercice.id}`}
+                id={`name-${exercice.id}`}
+                className="select select-bordered w-full"
+                defaultValue={exercice.exerciceId}
+              >
+                {availableExercises.map((exercise) => (
+                  <option key={exercise.id} value={exercise.id}>
+                    {exercise.name}
+                  </option>
+                ))}
+              </select>
+            </label>
             {exercice.type !== "cardio" ? (
               <>
                 <div className="flex items-center gap-2">
-                  <div className="grow">
+                  <label className="form-control grow">
                     <div className="label">
-                      <label htmlFor="series" className="label-text">
-                        Séries
-                      </label>
+                      <span className="label-text">Séries</span>
                     </div>
                     <input
                       type="number"
-                      id="series"
-                      name="sets"
-                      placeholder="3"
                       className="input input-bordered w-full"
-                      required
-                      defaultValue={Number(exercice.sets)}
+                      name={`sets-update-${exercice.id}`}
+                      defaultValue={exercice.sets || 0}
                     />
-                  </div>
-                  <div className="grow">
+                  </label>
+                  <label className="form-control grow">
                     <div className="label">
-                      <label htmlFor="reps" className="label-text">
-                        Répétitions
-                      </label>
+                      <span className="label-text">Répétitions</span>
                     </div>
                     <input
                       type="number"
-                      id="reps"
-                      name="reps"
-                      placeholder="12"
                       className="input input-bordered w-full"
-                      required
-                      defaultValue={Number(exercice.reps)}
+                      name={`reps-update-${exercice.id}`}
+                      defaultValue={exercice.reps || 0}
                     />
-                  </div>
-                </div>
-                <div className="label">
-                  <label htmlFor="weight" className="label-text">
-                    Poids (kg)
                   </label>
                 </div>
-                <input
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  placeholder="0"
-                  className="input input-bordered w-full"
-                  required
-                  defaultValue={Number(exercice.weight)}
-                />
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text">Poid (kg)</span>
+                  </div>
+                  <input
+                    type="number"
+                    className="input input-bordered w-full"
+                    name={`weight-update-${exercice.id}`}
+                    defaultValue={exercice.weight || 0}
+                  />
+                </label>
               </>
             ) : (
               <>
-                <div className="label">
-                  <label htmlFor="duration" className="label-text">
-                    Durée (minutes)
-                  </label>
-                </div>
-                <input
-                  type="number"
-                  id="duration"
-                  name="duration"
-                  placeholder="0"
-                  className="input input-bordered w-full"
-                  required
-                  defaultValue={Number(exercice.duration)}
-                />
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text">Durée (min)</span>
+                  </div>
+                  <input
+                    type="number"
+                    className="input input-bordered w-full"
+                    name={`duration-update-${exercice.id}`}
+                    defaultValue={exercice.duration || 0}
+                  />
+                </label>
               </>
             )}
-            <div className="label">
-              <label htmlFor="desc" className="label-text">
-                Note (optionel)
-              </label>
-            </div>
-            <textarea
-              id="desc"
-              name="description"
-              placeholder="Notes ou instructions supplémentaires…"
-              className="textarea textarea-bordered w-full"
-              defaultValue={exercice.description as string}
-            ></textarea>
+            <label className="form-control grow">
+              <div className="label">
+                <span className="label-text">Note (optionel)</span>
+              </div>
+              <textarea
+                className="textarea textarea-bordered w-full"
+                name={`description-update-${exercice.id}`}
+                defaultValue={exercice.description || ""}
+                placeholder={exercice.description || "Insérer une note"}
+              />
+            </label>
           </form>
           <div className="modal-action">
-            <form method="dialog">
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setOpen(false);
-                    form.current?.reset();
-                    setSelectedExerciseId(null);
-                  }}
-                >
-                  Annuler
-                </Button>
-                <Button form="update-form" type="submit">
-                  📝 Modifier
-                </Button>
-              </div>
-            </form>
+            <Button
+              className="btn"
+              variant="ghost"
+              onClick={() => {
+                setOpen(false);
+                form.current?.reset();
+              }}
+              disabled={isUpdating}
+            >
+              Annuler
+            </Button>
+            <Button
+              type="submit"
+              form={formId}
+              className="btn"
+              disabled={isUpdating}
+            >
+              {!isUpdating ? "Mettre à jour" : "Mise à jour en cours..."}
+            </Button>
           </div>
         </div>
       </dialog>
@@ -280,9 +256,7 @@ function CardExercice({
             <Button
               variant="ghost"
               className="px-5 py-1 shadow-none"
-              onClick={() => {
-                setOpen(true);
-              }}
+              onClick={() => setOpen(true)}
             >
               <Pencil2Icon />
             </Button>

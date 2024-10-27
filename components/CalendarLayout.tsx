@@ -204,7 +204,12 @@ function CalendarLayout({ user }: { user: User | null }) {
           })}
         </h2>
         {loading ? (
-          <p>Chargement des entrainements...</p>
+          <div className="space-y-2 px-4">
+            <div className="h-32 w-full animate-pulse rounded-md bg-slate-100 shadow-sm"></div>
+            <div className="h-32 w-full animate-pulse rounded-md bg-slate-100 shadow-sm"></div>
+            <div className="h-32 w-full animate-pulse rounded-md bg-slate-100 shadow-sm"></div>
+            <div className="h-32 w-full animate-pulse rounded-md bg-slate-100 shadow-sm"></div>
+          </div>
         ) : workouts.length === 0 ? (
           <p>Aucun entrainement pour cette date</p>
         ) : (

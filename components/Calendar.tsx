@@ -18,12 +18,11 @@ function Calendar({
         timeZone="Europe/Paris"
         selected={selected}
         onSelect={setSelected}
-        //gray out past days
         modifiers={{
           past: (date) => date < today,
         }}
         modifiersClassNames={{
-          past: "text-gray-400",
+          past: "text-gray-900/50",
         }}
       />
     </div>

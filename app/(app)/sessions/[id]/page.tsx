@@ -48,6 +48,7 @@ async function page({ params }: { params: { id: string } }) {
         <ul className="space-y-2">
           {exercices.map((exercice) => (
             <CardExercice
+              exercicesList={availableExercises}
               exercice={exercice}
               key={exercice.id}
               userId={user?.user?.id}

@@ -95,3 +95,43 @@ export async function deleteWorkoutExerciceById(id: string) {
     throw new Error("Impossible de supprimer l'exercice");
   }
 }
+
+export async function updateWorkoutExercice({
+  id,
+  workoutId,
+  exerciceId,
+  sets,
+  reps,
+  weight,
+  duration,
+  description,
+}: {
+  id: string;
+  workoutId: string;
+  exerciceId: string;
+  sets: number;
+  reps: number;
+  weight: number;
+  duration: number;
+  description: string;
+}) {
+  try {
+    return await db.workoutExercice.update({
+      where: {
+        id,
+      },
+      data: {
+        sets,
+        workoutId,
+        exerciceId,
+        reps,
+        weight,
+        duration,
+        description,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("Impossible de mettre à jour l'exercice");
+  }
+}

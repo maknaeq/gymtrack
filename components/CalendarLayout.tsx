@@ -112,7 +112,7 @@ function CalendarLayout({ user }: { user: User | null }) {
     if (workoutId) setWorkoutId(workoutId);
   }
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-4">
       <dialog id="my_modal_1" className={`modal ${open ? "modal-open" : ""}`}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
@@ -125,7 +125,6 @@ function CalendarLayout({ user }: { user: User | null }) {
           </p>
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
               <div className="flex items-center gap-1">
                 <Button variant="ghost" onClick={() => setOpen(false)}>
                   Plus tard

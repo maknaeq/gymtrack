@@ -1,7 +1,11 @@
 "use client"; // Make sure the component is client-side
 import { login } from "@/actions/users";
 import Button from "@/components/ui/Button";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import {
+  ArrowLeftIcon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Import useRouter for redirection
 import { useState } from "react";
@@ -10,6 +14,7 @@ function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); // Set loading state
   const [error, setError] = useState<string | null>(null); // Set error state
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +33,7 @@ function Login() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-zinc-50/30">
+    <div className="flex h-screen items-center justify-center bg-slate-50/30">
       <form
         className="form-control mx-auto min-w-96 max-w-sm rounded-xl bg-white p-8 shadow-sm"
         onSubmit={handleSubmit} // Handle submission client-side
@@ -51,17 +56,30 @@ function Login() {
             className="input input-bordered w-full"
           />
         </div>
-        <div className="label flex flex-col items-start">
-          <label htmlFor="password" className="text-label">
-            Mot de passe
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input input-bordered w-full"
-          />
-        </div>
+        <label htmlFor="password" className="">
+          <div className="label">
+            <span className="label-text">Mot de passe</span>
+          </div>
+          <div className="input input-bordered flex w-full items-center">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              id="password"
+              name="password"
+              className="grow"
+            />
+            {isPasswordVisible ? (
+              <EyeOpenIcon
+                onClick={() => setIsPasswordVisible((val) => !val)}
+                className="cursor-pointer"
+              />
+            ) : (
+              <EyeClosedIcon
+                onClick={() => setIsPasswordVisible((val) => !val)}
+                className="cursor-pointer"
+              />
+            )}
+          </div>
+        </label>
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <div className="mt-3 flex flex-col space-y-2">

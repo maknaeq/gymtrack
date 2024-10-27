@@ -20,7 +20,7 @@ async function page({ params }: { params: { id: string } }) {
     <div>
       <Link
         href={"/sessions"}
-        className="flex items-center gap-1 text-sm text-zinc-500 underline-offset-2 hover:underline"
+        className="flex items-center gap-1 text-sm text-slate-500 underline-offset-2 hover:underline"
       >
         <ArrowLeftIcon />
         Liste des sessions

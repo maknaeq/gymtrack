@@ -52,7 +52,7 @@ function CardExercice({
     fetchPr();
   }, [userId, exercice.exerciceId]);
   return (
-    <div className="mx-auto max-w-[640px] rounded-md bg-zinc-100 p-1">
+    <div className="mx-auto max-w-[640px] rounded-md bg-slate-100 p-1">
       <li className="flex items-center justify-between rounded-md border bg-white p-4 shadow-sm">
         <div>
           <h3 className="font-bold">{exercice.name}</h3>
@@ -67,7 +67,7 @@ function CardExercice({
                   : exercice.reps + "rep"}
               </p>
             </div>
-            <p className="text-zinc-400/60">
+            <p className="text-slate-400/60">
               {exercice.description && exercice.description}
             </p>
           </div>

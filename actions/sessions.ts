@@ -80,6 +80,20 @@ export async function getWorkoutByUserId(userId: string) {
 }
 
 export async function deleteWorkout(workoutId: string) {
+  // Delete related records first
+  await db.workoutExercice.deleteMany({
+    where: {
+      workoutId,
+    },
+  });
+
+  await db.sessionLog.deleteMany({
+    where: {
+      workoutId,
+    },
+  });
+
+  // Delete the workout
   return await db.workout.delete({
     where: {
       id: workoutId,

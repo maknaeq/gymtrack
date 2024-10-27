@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${dmSans.className} bg-slate-50/30 text-zinc-800`}>
+      <body className={`${dmSans.className} bg-slate-50/30 text-slate-800`}>
         <div className="mx-auto h-screen max-w-[960px]">
           <Header />
           <main className="my-4 px-8">{children}</main>

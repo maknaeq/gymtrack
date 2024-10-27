@@ -71,7 +71,7 @@ model WorkoutExercice {
   description String?
 
   // Relations
-  workout    Workout  @relation(fields: [workoutId], references: [id])
+  workout    Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
   exercice   Exercice @relation(fields: [exerciceId], references: [id])
 
   @@map("workout_exercices")
@@ -117,7 +117,7 @@ model SessionLog {
   createdAt   DateTime @default(now())
 
   // Relations
-  workout     Workout  @relation(fields: [workoutId], references: [id])
+  workout     Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
 
   @@map("session_logs")
 }

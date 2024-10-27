@@ -1,7 +1,11 @@
 "use client";
 import { login, register } from "@/actions/users";
 import Button from "@/components/ui/Button";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import {
+  ArrowLeftIcon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,6 +14,7 @@ function SignIn() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -27,7 +32,7 @@ function SignIn() {
     }
   };
   return (
-    <div className="flex h-screen items-center justify-center bg-zinc-50/30">
+    <div className="flex h-screen items-center justify-center bg-slate-50/30">
       <form
         className="form-control mx-auto min-w-96 max-w-sm rounded-xl bg-white p-8 shadow-sm"
         onSubmit={handleSubmit}
@@ -61,17 +66,30 @@ function SignIn() {
             className="input input-bordered w-full"
           />
         </div>
-        <div className="label flex flex-col items-start">
-          <label htmlFor="password" className="text-label">
-            Mot de passe
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input input-bordered w-full"
-          />
-        </div>
+        <label htmlFor="password" className="">
+          <div className="label">
+            <span className="label-text">Mot de passe</span>
+          </div>
+          <div className="input input-bordered flex w-full items-center">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              id="password"
+              name="password"
+              className="grow"
+            />
+            {isPasswordVisible ? (
+              <EyeOpenIcon
+                onClick={() => setIsPasswordVisible((val) => !val)}
+                className="cursor-pointer"
+              />
+            ) : (
+              <EyeClosedIcon
+                onClick={() => setIsPasswordVisible((val) => !val)}
+                className="cursor-pointer"
+              />
+            )}
+          </div>
+        </label>
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <div className="mt-3 flex flex-col space-y-2">

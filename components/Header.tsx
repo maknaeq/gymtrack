@@ -2,9 +2,9 @@ import React from "react";
 import Logo from "@/public/images/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { ExitIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { auth, signOut } from "@/auth";
-import Button from "@/components/ui/Button";
+import NavLink from "./ui/NavLink";
 
 const navLinks = [
   { title: "Séances", href: "/sessions" },
@@ -24,14 +24,8 @@ async function Header() {
       </Link>
       {session ? (
         <nav className="hidden w-80 items-center justify-between md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.title}
-              href={link.href}
-              className="rounded-md underline-offset-4 hover:underline"
-            >
-              {link.title}
-            </Link>
+          {navLinks.map((link, index) => (
+            <NavLink key={index} link={link} />
           ))}
         </nav>
       ) : (

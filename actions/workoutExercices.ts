@@ -33,3 +33,48 @@ export async function getSessionExercices({
     };
   });
 }
+
+export async function getAllWorkoutExercicesFromUserId({
+  userId,
+}: {
+  userId: string;
+}) {
+  const workouts = await db.workout.findMany({
+    where: {
+      userId,
+    },
+  });
+  const workoutExercices = await db.workoutExercice.findMany({
+    where: {
+      workoutId: {
+        in: workouts.map((w) => w.id),
+      },
+    },
+  });
+  const exercices = await db.exercice.findMany({
+    where: {
+      id: {
+        in: workoutExercices.map((we) => we.exerciceId),
+      },
+    },
+  });
+  return workoutExercices.map((we) => {
+    const exercice = exercices.find((e) => e.id === we.exerciceId);
+    const workout = workouts.find((w) => w.id === we.workoutId);
+    return {
+      id: we.id,
+      workoutId: we.workoutId,
+      workoutName: exercice?.name,
+      exerciceId: we.exerciceId,
+      exerciceName: exercice?.name,
+      type: exercice?.type,
+      sets: we.sets,
+      reps: we.reps,
+      weight: we.weight,
+      duration: we.duration,
+      description: we.description,
+      rpe: we.rpe,
+      date: workout?.date,
+    };
+  });
+}

@@ -1,0 +1,197 @@
+"use client";
+import { CaretDownIcon, CaretUpIcon } from "@radix-ui/react-icons";
+import {
+  Area,
+  AreaChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
+
+export type ExerciceData = {
+  date: string;
+  weight: number | null;
+  duration: number | null;
+  sets: number;
+  reps: number;
+};
+
+export type Ex = {
+  workoutName: string;
+  data: ExerciceData[];
+};
+
+function PerformanceChart({ exercices }: { exercices: Ex[] }) {
+  //sort the data by date
+  const exercises: {
+    workoutName: string;
+    data: ExerciceData[];
+  }[] = exercices.map((exercise) => {
+    return {
+      workoutName: exercise.workoutName,
+      data: exercise.data.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      }),
+    };
+  });
+
+  function getPr(exercise: Ex) {
+    return exercise.data.reduce((acc, curr) => {
+      //if the weight is null or 0, we take the duration
+      if (curr.weight === null || curr.weight === 0) {
+        if (curr.duration && curr.duration > acc) {
+          return curr.duration;
+        }
+        return acc;
+      }
+      if (curr.weight > acc) {
+        return curr.weight;
+      }
+      return acc;
+    }, 0);
+  }
+
+  //create a function to display if the performance is down or up and return the percentage
+  function getPerformance(exercise: Ex) {
+    const pr = getPr(exercise);
+    const lastData = exercise.data[exercise.data.length - 1];
+    if (lastData.weight === null || lastData.weight === 0) {
+      if (lastData.duration && pr) {
+        return Math.round(((lastData.duration - pr) / pr) * 100);
+      }
+      return 0;
+    }
+    if (pr) {
+      return Math.round(((lastData.weight - pr) / pr) * 100);
+    }
+    return 0;
+  }
+
+  return (
+    <div className="grid grid-cols-1 space-y-12 py-12">
+      {exercises.map((exercise) => (
+        <div key={exercise.workoutName} className="flex">
+          <div className="w-80">
+            <h2 className="text-2xl font-bold">{exercise.workoutName}</h2>
+            <div>
+              <p>
+                PR:{" "}
+                <span className="font-bold text-blue-500">
+                  {getPr(exercise)}
+                  {exercise.data[0].weight === null ||
+                  exercise.data[0].weight === 0
+                    ? "min"
+                    : "kg"}
+                </span>
+              </p>
+              <p
+                className={`flex font-bold ${
+                  getPerformance(exercise) > 0
+                    ? "text-green-500"
+                    : getPerformance(exercise) === 0
+                      ? "text-gray-500"
+                      : "text-red-500"
+                }`}
+              >
+                {getPerformance(exercise)}%
+                {getPerformance(exercise) > 0 ? (
+                  <CaretUpIcon />
+                ) : getPerformance(exercise) === 0 ? (
+                  ""
+                ) : (
+                  <CaretDownIcon />
+                )}
+              </p>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart
+              data={exercise.data}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                fontSize={10}
+                tickFormatter={(date) =>
+                  new Date(date).toLocaleDateString(
+                    "fr-FR", // Set locale to French
+                    {
+                      month: "2-digit",
+                      day: "2-digit",
+                    },
+                  )
+                }
+              />
+              <YAxis fontSize={10} tickLine={false} axisLine={false} />
+              {/* If weight = null or 0 then display area duration else display weight */}
+              {exercise.data[0].weight === null ||
+              exercise.data[0].weight === 0 ? (
+                <Area
+                  type="monotone"
+                  dataKey="duration"
+                  stroke="#8884d8"
+                  fill="url(#colorUv)"
+                />
+              ) : (
+                <Area
+                  type="monotone"
+                  dataKey="weight"
+                  stroke="#8884d8"
+                  fill="url(#colorUv)"
+                />
+              )}
+              <Tooltip
+                content={({ payload }) => {
+                  if (
+                    !payload ||
+                    payload.length === 0 ||
+                    !payload[0].payload.date
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <div className="rounded bg-white p-3 text-sm shadow-md">
+                      <p className="">
+                        Le{" "}
+                        {new Date(payload[0].payload.date).toLocaleDateString(
+                          "fr-FR",
+                          {
+                            month: "short",
+                            day: "2-digit",
+                          },
+                        )}
+                      </p>
+                      <p className="font-bold">
+                        {exercise.data[0].weight === null ||
+                        exercise.data[0].weight === 0
+                          ? `Durée: ${payload[0].payload.duration} min`
+                          : `Poids: ${payload[0].payload.weight} kg`}
+                      </p>
+                      <div className="flex gap-2">
+                        <p className="">Séries: {payload[0].payload.sets}</p>
+                        <p className="">Reps: {payload[0].payload.reps}</p>
+                      </div>
+                    </div>
+                  );
+                }}
+              />
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#bfdbfe" stopOpacity={0.7} />
+                  <stop offset="75%" stopColor="#3b82f6" stopOpacity={0.05} />
+                </linearGradient>
+              </defs>
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default PerformanceChart;

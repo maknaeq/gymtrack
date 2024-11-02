@@ -13,7 +13,6 @@ import {
   updateWorkoutExercice,
 } from "@/actions/exercice";
 import { useRouter } from "next/navigation";
-import { fi } from "date-fns/locale";
 
 type Exercice = {
   id: string;
@@ -39,6 +38,12 @@ type Pr = {
   createdAt: Date;
 }[];
 
+type AvailableExercises = {
+  id: string;
+  type: string;
+  name: string;
+  muscleGroup: string | null;
+}[];
 function CardExercice({
   availableExercises,
   exercice,
@@ -46,7 +51,7 @@ function CardExercice({
 }: {
   exercice: Exercice;
   userId: string | undefined;
-  availableExercises: Exercice[];
+  availableExercises: AvailableExercises | null;
 }) {
   const [pr, setPr] = useState<Pr>([]);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -127,7 +132,7 @@ function CardExercice({
                 className="select select-bordered w-full"
                 defaultValue={exercice.exerciceId}
               >
-                {availableExercises.map((exercise) => (
+                {availableExercises?.map((exercise) => (
                   <option key={exercise.id} value={exercise.id}>
                     {exercise.name}
                   </option>

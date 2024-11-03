@@ -185,7 +185,7 @@ function PerformanceChart({ exercices }: { exercices: Ex[] }) {
                   }
                   return (
                     <div className="rounded bg-white p-3 text-sm shadow-md">
-                      <p className="">
+                      <p className="mb-2">
                         Le{" "}
                         {new Date(payload[0].payload.date).toLocaleDateString(
                           "fr-FR",

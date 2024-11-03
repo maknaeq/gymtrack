@@ -11,7 +11,7 @@ function NavLink({ link }: { link: { title: string; href: string } }) {
       key={link.title}
       href={link.href}
       className={twMerge(
-        "rounded-md underline-offset-4 hover:underline",
+        "rounded-md underline-offset-8 hover:underline",
         pathname.includes(link.href) && "text-blue-500 underline",
       )}
     >

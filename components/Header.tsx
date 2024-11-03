@@ -2,15 +2,10 @@ import React from "react";
 import Logo from "@/public/images/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { auth, signOut } from "@/auth";
 import NavLink from "./ui/NavLink";
-
-const navLinks = [
-  { title: "Séances", href: "/sessions" },
-  { title: "Performances", href: "/performances" },
-  { title: "Goals", href: "/goals" },
-];
+import MobileMenu from "./MobileMenu";
+import { navLinks } from "@/lib/navLinks";
 
 async function Header() {
   const session = await auth();
@@ -23,17 +18,20 @@ async function Header() {
         <h1 className="font-bold text-blue-500">Gymtrack</h1>
       </Link>
       {session ? (
-        <nav className="hidden w-80 items-center justify-between md:flex">
-          {navLinks.map((link, index) => (
-            <NavLink key={index} link={link} />
-          ))}
-        </nav>
+        <>
+          <nav className="hidden w-80 items-center justify-between md:flex">
+            {navLinks.map((link, index) => (
+              <NavLink key={index} link={link} />
+            ))}
+          </nav>
+          <nav className="block md:hidden">
+            <MobileMenu />
+          </nav>
+        </>
       ) : (
         <div></div>
       )}
-      <nav className="block md:hidden">
-        <HamburgerMenuIcon className="size-5" />
-      </nav>
+
       {session ? (
         <div className="hidden cursor-pointer items-center gap-2 md:flex">
           <div

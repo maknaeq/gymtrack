@@ -118,7 +118,7 @@ function CalendarLayout({ user }: { user: User | null }) {
       <dialog id="my_modal_1" className={`modal ${open ? "modal-open" : ""}`}>
         <div className="modal-box">
           <h3 className="text-lg font-bold">
-            Tu veins de créer une <span className="text-blue-500">séance!</span>{" "}
+            Tu viens de créer une <span className="text-blue-500">séance!</span>{" "}
             💪
           </h3>
           <p className="py-4">
@@ -145,7 +145,7 @@ function CalendarLayout({ user }: { user: User | null }) {
           </div>
         </div>
       </dialog>
-      <div className="flex items-start gap-12">
+      <div className="items-start gap-12 pb-8 md:mb-0 md:flex">
         <Calendar selected={selected} setSelected={setSelected} />
         <div className="w-full">
           <h1 className="text-xl font-bold">Crée une séance</h1>

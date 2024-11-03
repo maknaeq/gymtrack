@@ -9,10 +9,10 @@ export default async function Home() {
     session.user.name.charAt(0).toUpperCase() + session.user.name.slice(1);
   return (
     <div className="my-20 flex justify-center">
-      <div className="mt-20 max-w-[640px]">
+      <div className="mt-10 max-w-[640px] md:mt-20">
         {session ? (
           <>
-            <h1 className="text-7xl">
+            <h1 className="text-5xl md:text-7xl">
               Bienvenue,{" "}
               <span className="font-semibold text-blue-500">{username}</span>
             </h1>
@@ -23,18 +23,20 @@ export default async function Home() {
           </>
         ) : (
           <>
-            <h1 className="text-7xl">
+            <h1 className="text-5xl md:text-7xl">
               Transformez vos{" "}
               <span className="font-semibold text-blue-500">efforts</span> en
               résultats{" "}
               <span className="font-semibold text-blue-500">mesurables</span>.
             </h1>
-            <div className="mt-3 space-x-2">
-              <Link href={"/signup"}>
-                <Button>S&apos;inscrire</Button>
+            <div className="mt-3 flex flex-col items-center gap-2 space-x-2 md:block">
+              <Link href={"/signup"} className="w-full md:w-fit">
+                <Button className="w-full md:w-fit">S&apos;inscrire</Button>
               </Link>
-              <Link href={"/login"}>
-                <Button variant="outline">Se connecter</Button>
+              <Link href={"/login"} className="w-full md:w-fit">
+                <Button variant="outline" className="w-full md:w-fit">
+                  Se connecter
+                </Button>
               </Link>
             </div>
           </>

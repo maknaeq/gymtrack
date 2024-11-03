@@ -257,7 +257,7 @@ function CardExercice({
               </p>
             </div>
           </div>
-          <div>
+          <div className="flex flex-col items-center md:block">
             <Button
               variant="ghost"
               className="px-5 py-1 shadow-none"

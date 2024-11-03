@@ -54,7 +54,7 @@ function PerformanceChart({ exercices }: { exercices: Ex[] }) {
   }
 
   //create a function to display if the performance is down or up and return the percentage
-  function getPerformance(exercise: Ex) {
+  function getPerformanceFromTheLastWorkout(exercise: Ex) {
     const pr = getPr(exercise);
     const lastData = exercise.data[exercise.data.length - 1];
     if (lastData.weight === null || lastData.weight === 0) {
@@ -69,41 +69,70 @@ function PerformanceChart({ exercices }: { exercices: Ex[] }) {
     return 0;
   }
 
+  //get the performance from the whole month (take the first and the last data of the current month)
+  function getPerformanceFromTheMonth(exercise: Ex) {
+    const pr = getPr(exercise);
+    const firstData = exercise.data[0];
+    const lastData = exercise.data[exercise.data.length - 1];
+    if (lastData.weight === null || lastData.weight === 0) {
+      if (
+        lastData.duration !== null &&
+        firstData.duration !== null &&
+        lastData.duration &&
+        pr
+      ) {
+        return Math.round(
+          ((lastData.duration - firstData.duration) / pr) * 100,
+        );
+      }
+      return 0;
+    }
+    if (pr && firstData.weight !== null) {
+      return Math.round(((lastData.weight - firstData.weight) / pr) * 100);
+    }
+    return 0;
+  }
+
   return (
     <div className="grid grid-cols-1 space-y-12 py-12">
       {exercises.map((exercise) => (
         <div key={exercise.workoutName} className="flex">
           <div className="w-80">
             <h2 className="text-2xl font-bold">{exercise.workoutName}</h2>
-            <div>
-              <p>
-                PR:{" "}
-                <span className="font-bold text-blue-500">
-                  {getPr(exercise)}
-                  {exercise.data[0].weight === null ||
-                  exercise.data[0].weight === 0
-                    ? "min"
-                    : "kg"}
-                </span>
-              </p>
-              <p
-                className={`flex font-bold ${
-                  getPerformance(exercise) > 0
-                    ? "text-green-500"
-                    : getPerformance(exercise) === 0
-                      ? "text-gray-500"
-                      : "text-red-500"
-                }`}
-              >
-                {getPerformance(exercise)}%
-                {getPerformance(exercise) > 0 ? (
-                  <CaretUpIcon />
-                ) : getPerformance(exercise) === 0 ? (
-                  ""
-                ) : (
-                  <CaretDownIcon />
-                )}
-              </p>
+            <div className="space-y-3">
+              <div>
+                <h3 className="text-sm">PR: </h3>
+                <p>
+                  <span className="font-bold text-blue-500">
+                    {getPr(exercise)}
+                    {exercise.data[0].weight === null ||
+                    exercise.data[0].weight === 0
+                      ? "min"
+                      : "kg"}
+                  </span>
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm">Pogression (dernière séance): </h3>
+                <p
+                  className={`flex font-bold ${
+                    getPerformanceFromTheLastWorkout(exercise) > 0
+                      ? "text-green-500"
+                      : getPerformanceFromTheLastWorkout(exercise) === 0
+                        ? "text-gray-500"
+                        : "text-red-500"
+                  }`}
+                >
+                  {getPerformanceFromTheLastWorkout(exercise)}%
+                  {getPerformanceFromTheLastWorkout(exercise) > 0 ? (
+                    <CaretUpIcon />
+                  ) : getPerformanceFromTheLastWorkout(exercise) === 0 ? (
+                    ""
+                  ) : (
+                    <CaretDownIcon />
+                  )}
+                </p>
+              </div>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={300}>

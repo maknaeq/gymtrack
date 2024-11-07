@@ -184,6 +184,7 @@ function CalendarLayout({ user }: { user: User | null }) {
                 name="date"
                 className="input input-bordered w-full"
                 defaultValue={selected.toISOString().split("T")[0]}
+                value={selected.toISOString().split("T")[0]}
                 required
               />
             </div>

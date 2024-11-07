@@ -23,7 +23,14 @@ export type Ex = {
   data: ExerciceData[];
 };
 
-function PerformanceChart({ exercices }: { exercices: Ex[] }) {
+function PerformanceChart({
+  exercices,
+}: {
+  exercices: {
+    workoutName: string;
+    data: ExerciceData[];
+  }[];
+}) {
   //sort the data by date
   const exercises: {
     workoutName: string;
@@ -54,19 +61,31 @@ function PerformanceChart({ exercices }: { exercices: Ex[] }) {
   }
 
   //create a function to display if the performance is down or up and return the percentage
-  function getPerformanceFromTheLastWorkout(exercise: Ex) {
-    const pr = getPr(exercise);
-    const lastData = exercise.data[exercise.data.length - 1];
-    if (lastData.weight === null || lastData.weight === 0) {
-      if (lastData.duration && pr) {
-        return Math.round(((lastData.duration - pr) / pr) * 100);
-      }
-      return 0;
+  function getPerformanceFromTheLastTwoWorkouts(exercise: Ex) {
+    const dataLength = exercise.data.length;
+    if (dataLength < 2) {
+      return 0; // Not enough data to compare
     }
-    if (pr) {
-      return Math.round(((lastData.weight - pr) / pr) * 100);
+
+    const lastData = exercise.data[dataLength - 1];
+    const secondLastData = exercise.data[dataLength - 2];
+
+    if (lastData.weight !== null && secondLastData.weight !== null) {
+      return Math.round(
+        ((lastData.weight - secondLastData.weight) / secondLastData.weight) *
+          100,
+      );
     }
-    return 0;
+
+    if (lastData.duration !== null && secondLastData.duration !== null) {
+      return Math.round(
+        ((lastData.duration - secondLastData.duration) /
+          secondLastData.duration) *
+          100,
+      );
+    }
+
+    return 0; // No valid data to compare
   }
 
   //get the performance from the whole month (take the first and the last data of the current month)
@@ -116,17 +135,17 @@ function PerformanceChart({ exercices }: { exercices: Ex[] }) {
                 <h3 className="text-sm">Pogression (dernière séance): </h3>
                 <p
                   className={`flex font-bold ${
-                    getPerformanceFromTheLastWorkout(exercise) > 0
+                    getPerformanceFromTheLastTwoWorkouts(exercise) > 0
                       ? "text-green-500"
-                      : getPerformanceFromTheLastWorkout(exercise) === 0
+                      : getPerformanceFromTheLastTwoWorkouts(exercise) === 0
                         ? "text-gray-500"
                         : "text-red-500"
                   }`}
                 >
-                  {getPerformanceFromTheLastWorkout(exercise)}%
-                  {getPerformanceFromTheLastWorkout(exercise) > 0 ? (
+                  {getPerformanceFromTheLastTwoWorkouts(exercise)}%
+                  {getPerformanceFromTheLastTwoWorkouts(exercise) > 0 ? (
                     <CaretUpIcon />
-                  ) : getPerformanceFromTheLastWorkout(exercise) === 0 ? (
+                  ) : getPerformanceFromTheLastTwoWorkouts(exercise) === 0 ? (
                     ""
                   ) : (
                     <CaretDownIcon />

@@ -1,6 +1,6 @@
 import { getAllWorkoutExercicesFromUserId } from "@/actions/workoutExercices";
 import { auth } from "@/auth";
-import PerformanceChart from "@/components/PerformanceChart";
+import PerformanceChart, { ExerciceData } from "@/components/PerformanceChart";
 import React from "react";
 
 export type WorkoutExercice = {
@@ -18,6 +18,11 @@ export type WorkoutExercice = {
   rpe: number | null;
   date: Date | undefined;
 }[];
+
+export type GroupedExercise = {
+  workoutName: string;
+  data: ExerciceData[];
+};
 
 function groupByWorkoutName(exercises) {
   //format the data into : [{workoutName: nameOfTheExercice, data: [{date: date, weight: weight, duration: duration, sets: sets, reps: reps}]}]
@@ -48,7 +53,9 @@ async function Performances() {
     userId: session?.user?.id as string,
   });
 
-  const groupedExercises = groupByWorkoutName(allWorkoutExercices);
+  const groupedExercises = groupByWorkoutName(
+    allWorkoutExercices,
+  ) as GroupedExercise[];
 
   // console.log("all", allWorkoutExercices);
 

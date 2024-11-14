@@ -115,10 +115,92 @@ function PerformanceChart({
   return (
     <div className="grid grid-cols-1 space-y-12 py-12">
       {exercises.map((exercise) => (
-        <div key={exercise.workoutName} className="flex">
-          <div className="w-80">
-            <h2 className="text-2xl font-bold">{exercise.workoutName}</h2>
-            <div className="space-y-3">
+        <div key={exercise.workoutName} className={"w-full"}>
+          <div className="w-full">
+            <h2 className="text-2xl font-bold pb-5">{exercise.workoutName}</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart
+                data={exercise.data}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  fontSize={10}
+                  tickFormatter={(date) =>
+                    new Date(date).toLocaleDateString(
+                      "fr-FR", // Set locale to French
+                      {
+                        month: "2-digit",
+                        day: "2-digit"
+                      }
+                    )
+                  }
+                />
+                <YAxis fontSize={10} tickLine={false} axisLine={false} />
+                {/* If weight = null or 0 then display area duration else display weight */}
+                {exercise.data[0].weight === null ||
+                exercise.data[0].weight === 0 ? (
+                  <Area
+                    type="monotone"
+                    dataKey="duration"
+                    stroke="#8884d8"
+                    fill="url(#colorUv)"
+                  />
+                ) : (
+                  <Area
+                    type="monotone"
+                    dataKey="weight"
+                    stroke="#8884d8"
+                    fill="url(#colorUv)"
+                  />
+                )}
+                <Tooltip
+                  content={({ payload }) => {
+                    if (
+                      !payload ||
+                      payload.length === 0 ||
+                      !payload[0].payload.date
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div className="rounded bg-white p-3 text-sm shadow-md">
+                        <p className="mb-2">
+                          Le{" "}
+                          {new Date(payload[0].payload.date).toLocaleDateString(
+                            "fr-FR",
+                            {
+                              month: "short",
+                              day: "2-digit"
+                            }
+                          )}
+                        </p>
+                        <p className="font-bold">
+                          {exercise.data[0].weight === null ||
+                          exercise.data[0].weight === 0
+                            ? `Durée: ${payload[0].payload.duration} min`
+                            : `Poids: ${payload[0].payload.weight} kg`}
+                        </p>
+                        <div className="flex gap-2">
+                          <p className="">Séries: {payload[0].payload.sets}</p>
+                          <p className="">Reps: {payload[0].payload.reps}</p>
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#bfdbfe" stopOpacity={0.7} />
+                    <stop offset="75%" stopColor="#3b82f6" stopOpacity={0.05} />
+                  </linearGradient>
+                </defs>
+              </AreaChart>
+            </ResponsiveContainer>
+            <div className="flex items-start justify-center gap-5">
               <div>
                 <h3 className="text-sm">PR: </h3>
                 <p>
@@ -155,88 +237,7 @@ function PerformanceChart({
               </div>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart
-              data={exercise.data}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tickLine={false}
-                axisLine={false}
-                fontSize={10}
-                tickFormatter={(date) =>
-                  new Date(date).toLocaleDateString(
-                    "fr-FR", // Set locale to French
-                    {
-                      month: "2-digit",
-                      day: "2-digit"
-                    }
-                  )
-                }
-              />
-              <YAxis fontSize={10} tickLine={false} axisLine={false} />
-              {/* If weight = null or 0 then display area duration else display weight */}
-              {exercise.data[0].weight === null ||
-              exercise.data[0].weight === 0 ? (
-                <Area
-                  type="monotone"
-                  dataKey="duration"
-                  stroke="#8884d8"
-                  fill="url(#colorUv)"
-                />
-              ) : (
-                <Area
-                  type="monotone"
-                  dataKey="weight"
-                  stroke="#8884d8"
-                  fill="url(#colorUv)"
-                />
-              )}
-              <Tooltip
-                content={({ payload }) => {
-                  if (
-                    !payload ||
-                    payload.length === 0 ||
-                    !payload[0].payload.date
-                  ) {
-                    return null;
-                  }
-                  return (
-                    <div className="rounded bg-white p-3 text-sm shadow-md">
-                      <p className="mb-2">
-                        Le{" "}
-                        {new Date(payload[0].payload.date).toLocaleDateString(
-                          "fr-FR",
-                          {
-                            month: "short",
-                            day: "2-digit"
-                          }
-                        )}
-                      </p>
-                      <p className="font-bold">
-                        {exercise.data[0].weight === null ||
-                        exercise.data[0].weight === 0
-                          ? `Durée: ${payload[0].payload.duration} min`
-                          : `Poids: ${payload[0].payload.weight} kg`}
-                      </p>
-                      <div className="flex gap-2">
-                        <p className="">Séries: {payload[0].payload.sets}</p>
-                        <p className="">Reps: {payload[0].payload.reps}</p>
-                      </div>
-                    </div>
-                  );
-                }}
-              />
-              <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#bfdbfe" stopOpacity={0.7} />
-                  <stop offset="75%" stopColor="#3b82f6" stopOpacity={0.05} />
-                </linearGradient>
-              </defs>
-            </AreaChart>
-          </ResponsiveContainer>
+
         </div>
       ))}
     </div>

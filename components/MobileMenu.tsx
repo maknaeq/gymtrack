@@ -28,7 +28,7 @@ function MobileMenu() {
   return (
     <div>
       <HamburgerMenuIcon
-        className="relative z-50 size-5"
+        className="relative z-50 size-5 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       />
 
@@ -36,7 +36,7 @@ function MobileMenu() {
         className={twMerge(
           "absolute left-0 top-0 z-40 h-screen w-screen translate-x-full bg-zinc-50 transition-transform duration-300 ease-out",
           isOpen && "translate-x-0",
-          !isOpen && "hidden",
+          !isOpen && "hidden"
         )}
       >
         <ul className="mt-80 flex flex-col items-center justify-center gap-12 text-3xl font-bold uppercase">

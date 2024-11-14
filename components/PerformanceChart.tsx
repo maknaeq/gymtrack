@@ -1,5 +1,4 @@
 "use client";
-import { CaretDownIcon, CaretUpIcon } from "@radix-ui/react-icons";
 import {
   Area,
   AreaChart,
@@ -7,8 +6,9 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  ResponsiveContainer,
+  ResponsiveContainer
 } from "recharts";
+import { TrendingDown, TrendingUp } from "lucide-react";
 
 export type ExerciceData = {
   date: string;
@@ -24,8 +24,8 @@ export type Ex = {
 };
 
 function PerformanceChart({
-  exercices,
-}: {
+                            exercices
+                          }: {
   exercices: {
     workoutName: string;
     data: ExerciceData[];
@@ -40,7 +40,7 @@ function PerformanceChart({
       workoutName: exercise.workoutName,
       data: exercise.data.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
-      }),
+      })
     };
   });
 
@@ -70,10 +70,12 @@ function PerformanceChart({
     const lastData = exercise.data[dataLength - 1];
     const secondLastData = exercise.data[dataLength - 2];
 
-    if (lastData.weight !== null && secondLastData.weight !== null) {
+    console.log("exercice", exercise, lastData, secondLastData);
+
+    if (lastData.weight !== null && secondLastData.weight !== null && lastData.weight !== 0) {
       return Math.round(
         ((lastData.weight - secondLastData.weight) / secondLastData.weight) *
-          100,
+        100
       );
     }
 
@@ -81,7 +83,7 @@ function PerformanceChart({
       return Math.round(
         ((lastData.duration - secondLastData.duration) /
           secondLastData.duration) *
-          100,
+        100
       );
     }
 
@@ -101,7 +103,7 @@ function PerformanceChart({
         pr
       ) {
         return Math.round(
-          ((lastData.duration - firstData.duration) / pr) * 100,
+          ((lastData.duration - firstData.duration) / pr) * 100
         );
       }
       return 0;
@@ -134,7 +136,7 @@ function PerformanceChart({
               <div>
                 <h3 className="text-sm">Pogression (dernière séance): </h3>
                 <p
-                  className={`flex font-bold ${
+                  className={`flex items-center gap-1 font-bold ${
                     getPerformanceFromTheLastTwoWorkouts(exercise) > 0
                       ? "text-green-500"
                       : getPerformanceFromTheLastTwoWorkouts(exercise) === 0
@@ -142,14 +144,15 @@ function PerformanceChart({
                         : "text-red-500"
                   }`}
                 >
-                  {getPerformanceFromTheLastTwoWorkouts(exercise)}%
                   {getPerformanceFromTheLastTwoWorkouts(exercise) > 0 ? (
-                    <CaretUpIcon />
+                    <TrendingUp size={20} />
                   ) : getPerformanceFromTheLastTwoWorkouts(exercise) === 0 ? (
                     ""
                   ) : (
-                    <CaretDownIcon />
+                    <TrendingDown size={20} />
                   )}
+                  {getPerformanceFromTheLastTwoWorkouts(exercise)}%
+
                 </p>
               </div>
             </div>
@@ -170,8 +173,8 @@ function PerformanceChart({
                     "fr-FR", // Set locale to French
                     {
                       month: "2-digit",
-                      day: "2-digit",
-                    },
+                      day: "2-digit"
+                    }
                   )
                 }
               />
@@ -210,8 +213,8 @@ function PerformanceChart({
                           "fr-FR",
                           {
                             month: "short",
-                            day: "2-digit",
-                          },
+                            day: "2-digit"
+                          }
                         )}
                       </p>
                       <p className="font-bold">

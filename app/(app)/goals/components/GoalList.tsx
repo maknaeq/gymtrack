@@ -8,6 +8,7 @@ import { setAchievedGoal } from "@/actions/goals";
 import Button from "@/components/ui/Button";
 import { Square, SquareCheck, Trash } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 export interface UserGoals {
   id: string;
@@ -80,7 +81,7 @@ export default function GoalList({ user }: { user: { id: string; name: string; e
                 <div className={"flex items-center gap-4"}>
 
                   <h3>{findExerciseName(goal.exerciceId)}</h3>
-
+                  <ArrowRightIcon />
                   <p>{goal.targetWeight}kg</p>
                 </div>
                 <div className={"flex items-center justify-between gap-2"}>

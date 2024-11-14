@@ -31,23 +31,22 @@ export async function login(formData: FormData) {
   const password = formData.get("password") as string;
 
   try {
-    const res = await signIn("credentials", {
+    return await signIn("credentials", {
       email,
       password,
       redirect: false
     });
-    return res;
   } catch (error) {
     return error;
   }
 }
 
 export async function getUsers() {
-  return await db.user.findMany();
+  return db.user.findMany();
 }
 
 export async function getUserByEmail(email: string) {
-  return await db.user.findUnique({
+  return db.user.findUnique({
     where: { email },
     select: { id: true, name: true, email: true }
   });

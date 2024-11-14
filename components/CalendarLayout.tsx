@@ -148,7 +148,7 @@ function CalendarLayout({ user }: { user: User | null }) {
       <div className="items-start gap-12 pb-8 md:mb-0 md:flex">
         <Calendar selected={selected} setSelected={setSelected} />
         <div className="w-full">
-          <h1 className="text-xl font-bold">Crée une séance</h1>
+          <h1 className="text-xl font-bold">Créer une séance</h1>
           <form
             onSubmit={handleSubmit}
             className="form-control flex flex-col gap-3"

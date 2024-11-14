@@ -9,7 +9,7 @@ export default async function Home() {
     session.user.name.charAt(0).toUpperCase() + session.user.name.slice(1);
   return (
     <div className="my-20 flex justify-center">
-      <div className="mt-10 max-w-[640px] md:mt-20">
+      <div className="mt-10 max-w-[900px] md:mt-10">
         {session ? (
           <>
             <h1 className="text-5xl md:text-7xl">
@@ -23,19 +23,19 @@ export default async function Home() {
           </>
         ) : (
           <>
-            <h1 className="text-5xl md:text-7xl">
-              Transformez vos{" "}
-              <span className="font-semibold text-blue-500">efforts</span> en
-              résultats{" "}
-              <span className="font-semibold text-blue-500">mesurables</span>.
+            <h1 className="text-center text-5xl md:text-6xl">
+              <span className="text-blue-500">Doublez votre progression</span>{" "}
+              et brisez la stagnation grâce à un{" "}
+              <span className="text-blue-500">suivi sur mesure.</span>
             </h1>
-            <div className="mt-3 flex flex-col items-center gap-2 space-x-2 md:block">
-              <Link href={"/signup"} className="w-full md:w-fit">
-                <Button className="w-full md:w-fit">S&apos;inscrire</Button>
-              </Link>
-              <Link href={"/login"} className="w-full md:w-fit">
-                <Button variant="outline" className="w-full md:w-fit">
-                  Se connecter
+            <p className="mt-3 text-center text-sm text-zinc-500/50">
+              Des outils pour suivre, organiser et améliorer chaque séance
+              d’entraînement.
+            </p>
+            <div className="flex w-full items-center justify-center py-10">
+              <Link href={"/signup"}>
+                <Button className="w-full md:w-fit">
+                  Suivre mes entraînements
                 </Button>
               </Link>
             </div>

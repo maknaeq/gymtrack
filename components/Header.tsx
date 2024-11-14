@@ -6,6 +6,7 @@ import { auth, signOut } from "@/auth";
 import NavLink from "./ui/NavLink";
 import MobileMenu from "./MobileMenu";
 import { navLinks } from "@/lib/navLinks";
+import Button from "./ui/Button";
 
 async function Header() {
   const session = await auth();
@@ -29,7 +30,11 @@ async function Header() {
           </nav>
         </>
       ) : (
-        <div></div>
+        <div className="mt-8 flex flex-col items-center gap-2 space-x-2 md:block">
+          <Link href={"/login"} className="w-full md:w-fit">
+            <Button variant="link">Se connecter</Button>
+          </Link>
+        </div>
       )}
 
       {session ? (
@@ -64,9 +69,7 @@ async function Header() {
             </form>
           </div>
         </div>
-      ) : (
-        <div className="hidden md:block"></div>
-      )}
+      ) : null}
     </header>
   );
 }

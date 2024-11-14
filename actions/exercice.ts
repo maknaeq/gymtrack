@@ -1,15 +1,19 @@
 "use server";
 import { db } from "@/lib/db";
 
+export async function getAllExercices() {
+  return db.exercice.findMany();
+}
+
 export async function createExercice({
-  workoutId,
-  exerciceId,
-  sets,
-  reps,
-  weight,
-  duration,
-  description,
-}: {
+                                       workoutId,
+                                       exerciceId,
+                                       sets,
+                                       reps,
+                                       weight,
+                                       duration,
+                                       description
+                                     }: {
   workoutId: string;
   exerciceId: string;
   sets: number;
@@ -28,8 +32,8 @@ export async function createExercice({
         weight,
         rpe: 0,
         duration,
-        description,
-      },
+        description
+      }
     });
   } catch (error) {
     console.error(error);
@@ -40,23 +44,23 @@ export async function createExercice({
 export async function getExercicesByType(type: string) {
   return db.exercice.findMany({
     where: {
-      type,
-    },
+      type
+    }
   });
 }
 
 export async function getExercicesByWorkoutId(workoutId: string) {
   const workoutExercices = await db.workoutExercice.findMany({
     where: {
-      workoutId,
-    },
+      workoutId
+    }
   });
   const exercices = await db.exercice.findMany({
     where: {
       id: {
-        in: workoutExercices.map((we) => we.exerciceId),
-      },
-    },
+        in: workoutExercices.map((we) => we.exerciceId)
+      }
+    }
   });
   return workoutExercices.map((we) => {
     const exercice = exercices.find((e) => e.id === we.exerciceId);
@@ -71,14 +75,14 @@ export async function getExercicesByWorkoutId(workoutId: string) {
       description: we.description,
       rpe: we.rpe,
       duration: we.duration,
-      type: exercice?.type,
+      type: exercice?.type
     };
   });
 }
 
 export async function getWorkoutExerciceById(id: string) {
   const exercice = await db.workoutExercice.findUnique({
-    where: { id },
+    where: { id }
   });
   if (!exercice) {
     throw new Error("Exercice not found");
@@ -87,13 +91,13 @@ export async function getWorkoutExerciceById(id: string) {
   return {
     ...exercice,
     name: (await db.exercice.findUnique({ where: { id: exercice.exerciceId } }))
-      ?.name, // get the exercice name
+      ?.name // get the exercice name
   };
 }
 
 export async function deleteWorkoutExerciceById(id: string) {
   const exercice = await db.workoutExercice.findUnique({
-    where: { id },
+    where: { id }
   });
 
   if (!exercice) {
@@ -102,8 +106,8 @@ export async function deleteWorkoutExerciceById(id: string) {
   try {
     return await db.workoutExercice.delete({
       where: {
-        id,
-      },
+        id
+      }
     });
   } catch (error) {
     console.error("Delete Error Details:", error); // Log full error
@@ -112,15 +116,15 @@ export async function deleteWorkoutExerciceById(id: string) {
 }
 
 export async function updateWorkoutExercice({
-  id,
-  workoutId,
-  exerciceId,
-  sets,
-  reps,
-  weight,
-  duration,
-  description,
-}: {
+                                              id,
+                                              workoutId,
+                                              exerciceId,
+                                              sets,
+                                              reps,
+                                              weight,
+                                              duration,
+                                              description
+                                            }: {
   id: string;
   workoutId: string;
   exerciceId: string;
@@ -133,7 +137,7 @@ export async function updateWorkoutExercice({
   try {
     return await db.workoutExercice.update({
       where: {
-        id,
+        id
       },
       data: {
         sets,
@@ -142,8 +146,8 @@ export async function updateWorkoutExercice({
         reps,
         weight,
         duration,
-        description,
-      },
+        description
+      }
     });
   } catch (error) {
     console.error(error);

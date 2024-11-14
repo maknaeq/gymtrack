@@ -1,5 +1,6 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
+
 type ButtonProps = {
   variant?:
     | "primary"
@@ -16,12 +17,12 @@ type ButtonProps = {
 };
 
 function Button({
-  variant = "primary",
-  type,
-  children,
-  className,
-  ...rest
-}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+                  variant = "primary",
+                  type,
+                  children,
+                  className,
+                  ...rest
+                }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type={type}
@@ -29,14 +30,15 @@ function Button({
         "btn rounded-lg bg-blue-500 px-8 text-slate-50 hover:bg-blue-600",
         variant === "secondary" && "bg-gray-500 hover:bg-gray-600",
         variant === "ghost" &&
-          "border-none bg-transparent text-slate-800 hover:bg-slate-100",
+        "border-none bg-transparent text-slate-800 hover:bg-slate-100 shadow-none",
         variant === "danger" && "bg-red-500 hover:bg-red-600",
         variant === "success" && "bg-green-500 hover:bg-green-600",
         variant === "warning" && "bg-yellow-500 hover:bg-yellow-600",
-        variant === "link" && "bg-transparent hover:bg-transparent",
+        variant === "link" &&
+        "border-none bg-transparent text-blue-500 underline-offset-4 shadow-none hover:bg-transparent hover:underline",
         variant === "outline" &&
-          "bg-slate-50 text-slate-800 hover:bg-slate-100",
-        className,
+        "bg-slate-50 text-slate-800 hover:bg-slate-100",
+        className
       )}
       {...rest}
     >

@@ -70,8 +70,6 @@ function PerformanceChart({
     const lastData = exercise.data[dataLength - 1];
     const secondLastData = exercise.data[dataLength - 2];
 
-    console.log("exercice", exercise, lastData, secondLastData);
-
     if (lastData.weight !== null && secondLastData.weight !== null && lastData.weight !== 0) {
       return Math.round(
         ((lastData.weight - secondLastData.weight) / secondLastData.weight) *
@@ -91,28 +89,28 @@ function PerformanceChart({
   }
 
   //get the performance from the whole month (take the first and the last data of the current month)
-  function getPerformanceFromTheMonth(exercise: Ex) {
-    const pr = getPr(exercise);
-    const firstData = exercise.data[0];
-    const lastData = exercise.data[exercise.data.length - 1];
-    if (lastData.weight === null || lastData.weight === 0) {
-      if (
-        lastData.duration !== null &&
-        firstData.duration !== null &&
-        lastData.duration &&
-        pr
-      ) {
-        return Math.round(
-          ((lastData.duration - firstData.duration) / pr) * 100
-        );
-      }
-      return 0;
-    }
-    if (pr && firstData.weight !== null) {
-      return Math.round(((lastData.weight - firstData.weight) / pr) * 100);
-    }
-    return 0;
-  }
+  // function getPerformanceFromTheMonth(exercise: Ex) {
+  //   const pr = getPr(exercise);
+  //   const firstData = exercise.data[0];
+  //   const lastData = exercise.data[exercise.data.length - 1];
+  //   if (lastData.weight === null || lastData.weight === 0) {
+  //     if (
+  //       lastData.duration !== null &&
+  //       firstData.duration !== null &&
+  //       lastData.duration &&
+  //       pr
+  //     ) {
+  //       return Math.round(
+  //         ((lastData.duration - firstData.duration) / pr) * 100
+  //       );
+  //     }
+  //     return 0;
+  //   }
+  //   if (pr && firstData.weight !== null) {
+  //     return Math.round(((lastData.weight - firstData.weight) / pr) * 100);
+  //   }
+  //   return 0;
+  // }
 
   return (
     <div className="grid grid-cols-1 space-y-12 py-12">

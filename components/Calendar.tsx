@@ -2,9 +2,9 @@ import { DayPicker } from "react-day-picker";
 import { fr } from "date-fns/locale";
 
 function Calendar({
-  selected,
-  setSelected,
-}: {
+                    selected,
+                    setSelected
+                  }: {
   selected: Date;
   setSelected: (date: Date) => void;
 }) {
@@ -19,10 +19,10 @@ function Calendar({
         selected={selected}
         onSelect={setSelected}
         modifiers={{
-          past: (date) => date < today,
+          past: (date) => date < today
         }}
         modifiersClassNames={{
-          past: "text-gray-900/50",
+          past: "text-gray-900/50"
         }}
       />
     </div>

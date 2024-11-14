@@ -88,7 +88,7 @@ function CalendarLayout({ user }: { user: User | null }) {
     const fetchWorkouts = async () => {
       const workouts = await getUserWorkoutByDate({
         date: selected,
-        userId: user?.id as string,
+        userId: user?.id as string
       });
       setWorkouts(workouts);
       setLoading(false);
@@ -113,6 +113,7 @@ function CalendarLayout({ user }: { user: User | null }) {
     if (workoutId) setWorkoutId(workoutId);
     form.current?.reset();
   }
+
   return (
     <div className="space-y-8 pb-4">
       <dialog id="my_modal_1" className={`modal ${open ? "modal-open" : ""}`}>
@@ -201,7 +202,7 @@ function CalendarLayout({ user }: { user: User | null }) {
             weekday: "long",
             year: "numeric",
             month: "short",
-            day: "numeric",
+            day: "numeric"
           })}
         </h2>
         {loading ? (

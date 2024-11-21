@@ -1,3 +1,4 @@
+import { getUserByEmail } from "@/actions/users";
 import { getAllWorkoutExercicesFromUserId } from "@/actions/workoutExercices";
 import { auth } from "@/auth";
 import PerformanceChart, { ExerciceData } from "@/components/PerformanceChart";
@@ -49,15 +50,16 @@ function groupByWorkoutName(exercises) {
 
 async function Performances() {
   const session = await auth();
+  const user = await getUserByEmail( session?.user?.email as string);
   const allWorkoutExercices = await getAllWorkoutExercicesFromUserId({
-    userId: session?.user?.id as string,
+    userId: user?.id as string,
   });
 
   const groupedExercises = groupByWorkoutName(
     allWorkoutExercices,
   ) as GroupedExercise[];
 
-  // console.log("all", allWorkoutExercices);
+  console.log("all", allWorkoutExercices);
 
   return <PerformanceChart exercices={groupedExercises} />;
 }

@@ -114,6 +114,7 @@ function PerformanceChart({
 
   return (
     <div className="grid grid-cols-1 space-y-12 py-12">
+    {exercices.length === 0 && <p>Pas assez de données…</p>}
       {exercises.map((exercise) => (
         <div key={exercise.workoutName} className={"w-full"}>
           <div className="w-full">

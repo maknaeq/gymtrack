@@ -1,0 +1,146 @@
+[
+  {
+    "id": "53295a4b-7701-4a70-a8cc-330fe4eca694",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1730674800000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730585476954
+  },
+  {
+    "id": "ea21f52b-d55f-4265-a820-0487b76db3c5",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1729720800000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730585796377
+  },
+  {
+    "id": "a90f4ad2-49cd-4656-ad73-ef876460f57f",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1732662000000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730585923046
+  },
+  {
+    "id": "8469bd34-6766-4b5a-bbeb-60cabe2fa00b",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1730502000000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730586002103
+  },
+  {
+    "id": "5e5cb85c-f5be-4469-b1a6-7c229b642f31",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1730847600000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730927125470
+  },
+  {
+    "id": "79e39ab5-4f22-4190-8811-1432786a2fb9",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1732921200000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1730927637010
+  },
+  {
+    "id": "8dc8632d-3951-43f2-8bf3-50e82bec1cf2",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1730934000000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1731000835347
+  },
+  {
+    "id": "528128f7-da56-42c5-b2e7-a613f580a5f2",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1733007600000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1731000874720
+  },
+  {
+    "id": "788fdc86-d0b3-4843-ae45-c3c1a7ab9d3a",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1731538800000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1731569039016
+  },
+  {
+    "id": "90399742-dc97-4640-9d84-d3401e62945d",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1731538800000,
+    "type": "cardio",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1731578866632
+  },
+  {
+    "id": "80e75cfa-1ba4-49e2-b006-6666e559e6c7",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1731452400000,
+    "type": "cardio",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1731578912741
+  },
+  {
+    "id": "118f188f-0692-4e63-86dd-afa99dc5ad0a",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "date": 1732143600000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1732195162261
+  },
+  {
+    "id": "0202b330-d0ab-44d9-84d3-fd30149bd0ab",
+    "userId": "122678be-0530-415a-8af8-173a3e581074",
+    "date": 1734562800000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1734592152450
+  },
+  {
+    "id": "dd2790ee-5598-4655-b39b-9493c0019922",
+    "userId": "122678be-0530-415a-8af8-173a3e581074",
+    "date": 1734476400000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1734592213144
+  },
+  {
+    "id": "b307b11d-2efd-4334-9a65-09169084a99c",
+    "userId": "d66c0598-c836-4ea4-b217-684e40470a90",
+    "date": 1734562800000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1734592962737
+  },
+  {
+    "id": "a1374514-d482-4e4e-9a09-ba79f1a2fe71",
+    "userId": "d66c0598-c836-4ea4-b217-684e40470a90",
+    "date": 1734476400000,
+    "type": "upperBody",
+    "duration": null,
+    "notes": null,
+    "createdAt": 1734593040901
+  }
+]

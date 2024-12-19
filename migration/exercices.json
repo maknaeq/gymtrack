@@ -1,0 +1,242 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "Développé couché",
+    "muscleGroup": "Poitrine",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "name": "Pompes",
+    "muscleGroup": "Poitrine",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "name": "Tirage vertical",
+    "muscleGroup": "Dos",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "name": "Rowing avec haltères",
+    "muscleGroup": "Dos",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "name": "Élévations latérales",
+    "muscleGroup": "Épaules",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "name": "Développé militaire",
+    "muscleGroup": "Épaules",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "name": "Curls biceps",
+    "muscleGroup": "Bras",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "name": "Extensions triceps",
+    "muscleGroup": "Bras",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "name": "Face pulls",
+    "muscleGroup": "Épaules",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "name": "Dips",
+    "muscleGroup": "Poitrine",
+    "type": "upperBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "name": "Squat",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "name": "Fentes",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "name": "Presse à cuisses",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "name": "Soulevé de terre",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "name": "Soulevé de terre jambes tendues",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "name": "Extension des jambes",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "name": "Flexion des ischio-jambiers",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "name": "Pont fessier",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "name": "Élévation des mollets",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "name": "Step-ups",
+    "muscleGroup": "Jambes",
+    "type": "lowerBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "name": "Burpees",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "name": "Thrusters",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "name": "Soulevé de terre",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "name": "Kettlebell swings",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440024",
+    "name": "Snatch",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440025",
+    "name": "Clean & Jerk",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440026",
+    "name": "Push Press",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440027",
+    "name": "Mountain Climbers",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440028",
+    "name": "Sauts sur box",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440029",
+    "name": "Renegade Rows",
+    "muscleGroup": "Tout le corps",
+    "type": "fullBody"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440030",
+    "name": "Course à pied",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440031",
+    "name": "Vélo",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440032",
+    "name": "Rameur",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440033",
+    "name": "Corde à sauter",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440034",
+    "name": "Natation",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440035",
+    "name": "Marche",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440036",
+    "name": "HIIT",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440037",
+    "name": "Zumba",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440038",
+    "name": "Aérobic",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440039",
+    "name": "Boxe",
+    "muscleGroup": "Cardio",
+    "type": "cardio"
+  }
+]

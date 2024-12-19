@@ -1,0 +1,20 @@
+[
+  {
+    "id": "4b86a0ce-a13a-43d6-abc5-2ac5d219eb87",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "exerciceId": "550e8400-e29b-41d4-a716-446655440000",
+    "targetWeight": 20,
+    "deadline": 1731715200000,
+    "isAchieved": 1,
+    "createdAt": 1731577825668
+  },
+  {
+    "id": "57bd87c3-754c-49c7-a744-3b72b47a6c72",
+    "userId": "674fb940-5c53-42d1-9b99-991a86d6716f",
+    "exerciceId": "550e8400-e29b-41d4-a716-446655440009",
+    "targetWeight": 13,
+    "deadline": 1732233600000,
+    "isAchieved": 0,
+    "createdAt": 1731577924356
+  }
+]

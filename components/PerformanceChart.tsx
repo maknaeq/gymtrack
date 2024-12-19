@@ -6,12 +6,12 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 export type ExerciceData = {
-  date: string;
+  date: Date;
   weight: number | null;
   duration: number | null;
   sets: number;
@@ -24,8 +24,8 @@ export type Ex = {
 };
 
 function PerformanceChart({
-                            exercices
-                          }: {
+  exercices,
+}: {
   exercices: {
     workoutName: string;
     data: ExerciceData[];
@@ -40,7 +40,7 @@ function PerformanceChart({
       workoutName: exercise.workoutName,
       data: exercise.data.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
-      })
+      }),
     };
   });
 
@@ -70,10 +70,14 @@ function PerformanceChart({
     const lastData = exercise.data[dataLength - 1];
     const secondLastData = exercise.data[dataLength - 2];
 
-    if (lastData.weight !== null && secondLastData.weight !== null && lastData.weight !== 0) {
+    if (
+      lastData.weight !== null &&
+      secondLastData.weight !== null &&
+      lastData.weight !== 0
+    ) {
       return Math.round(
         ((lastData.weight - secondLastData.weight) / secondLastData.weight) *
-        100
+          100,
       );
     }
 
@@ -81,7 +85,7 @@ function PerformanceChart({
       return Math.round(
         ((lastData.duration - secondLastData.duration) /
           secondLastData.duration) *
-        100
+          100,
       );
     }
 
@@ -114,11 +118,11 @@ function PerformanceChart({
 
   return (
     <div className="grid grid-cols-1 space-y-12 py-12">
-    {exercices.length === 0 && <p>Pas assez de données…</p>}
+      {exercices.length === 0 && <p>Pas assez de données…</p>}
       {exercises.map((exercise) => (
         <div key={exercise.workoutName} className={"w-full"}>
           <div className="w-full">
-            <h2 className="text-2xl font-bold pb-5">{exercise.workoutName}</h2>
+            <h2 className="pb-5 text-2xl font-bold">{exercise.workoutName}</h2>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart
                 data={exercise.data}
@@ -135,8 +139,8 @@ function PerformanceChart({
                       "fr-FR", // Set locale to French
                       {
                         month: "2-digit",
-                        day: "2-digit"
-                      }
+                        day: "2-digit",
+                      },
                     )
                   }
                 />
@@ -175,8 +179,8 @@ function PerformanceChart({
                             "fr-FR",
                             {
                               month: "short",
-                              day: "2-digit"
-                            }
+                              day: "2-digit",
+                            },
                           )}
                         </p>
                         <p className="font-bold">
@@ -233,12 +237,10 @@ function PerformanceChart({
                     <TrendingDown size={20} />
                   )}
                   {getPerformanceFromTheLastTwoWorkouts(exercise)}%
-
                 </p>
               </div>
             </div>
           </div>
-
         </div>
       ))}
     </div>

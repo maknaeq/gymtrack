@@ -25,41 +25,40 @@ export type GroupedExercise = {
   data: ExerciceData[];
 };
 
-function groupByWorkoutName(exercises) {
-  //format the data into : [{workoutName: nameOfTheExercice, data: [{date: date, weight: weight, duration: duration, sets: sets, reps: reps}]}]
-  const groupedExercises = exercises.reduce((acc, curr) => {
-    if (!acc[curr.workoutName]) {
-      acc[curr.workoutName] = [];
-    }
-    acc[curr.workoutName].push({
-      date: curr.date,
-      weight: curr.weight,
-      duration: curr.duration,
-      sets: curr.sets,
-      reps: curr.reps,
-    });
-    return acc;
-  }, {});
-  return Object.entries(groupedExercises).map(([key, value]) => {
-    return {
-      workoutName: key,
-      data: value,
-    };
-  });
+function groupByWorkoutName(exercises: WorkoutExercice): GroupedExercise[] {
+  const groupedExercises = exercises.reduce(
+    (acc: Record<string, ExerciceData[]>, curr) => {
+      if (!acc[curr.workoutName as string]) {
+        acc[curr.workoutName as string] = [];
+      }
+      acc[curr.workoutName as string].push({
+        date: curr.date as Date,
+        weight: curr.weight,
+        duration: curr.duration,
+        sets: curr.sets as number,
+        reps: curr.reps as number,
+      });
+      return acc;
+    },
+    {},
+  );
+
+  return Object.entries(groupedExercises).map(([key, value]) => ({
+    workoutName: key,
+    data: value,
+  }));
 }
 
 async function Performances() {
   const session = await auth();
-  const user = await getUserByEmail( session?.user?.email as string);
+  const user = await getUserByEmail(session?.user?.email as string);
   const allWorkoutExercices = await getAllWorkoutExercicesFromUserId({
     userId: user?.id as string,
   });
 
   const groupedExercises = groupByWorkoutName(
-    allWorkoutExercices,
+    allWorkoutExercices as WorkoutExercice,
   ) as GroupedExercise[];
-
-  console.log("all", allWorkoutExercices);
 
   return <PerformanceChart exercices={groupedExercises} />;
 }

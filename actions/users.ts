@@ -21,8 +21,8 @@ export async function register(formData: FormData) {
     data: {
       name,
       email,
-      password: hashedPassword
-    }
+      password: hashedPassword,
+    },
   });
 }
 
@@ -34,7 +34,7 @@ export async function login(formData: FormData) {
     return await signIn("credentials", {
       email,
       password,
-      redirect: false
+      redirect: false,
     });
   } catch (error) {
     return error;
@@ -46,8 +46,11 @@ export async function getUsers() {
 }
 
 export async function getUserByEmail(email: string) {
+  if (!email) {
+    throw new Error("Email is undefined");
+  }
   return db.user.findUnique({
     where: { email },
-    select: { id: true, name: true, email: true }
+    select: { id: true, name: true, email: true },
   });
 }

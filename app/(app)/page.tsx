@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <div className="my-20 flex justify-center">
       <div className="mt-10 max-w-[900px] md:mt-10">
-        {session ? (
+        {session?.user ? (
           <>
             <h1 className="text-5xl md:text-7xl">
               Bienvenue,{" "}

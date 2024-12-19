@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const session = await auth();
+  console.log("session", session?.user);
   const { pathname, origin } = req.nextUrl;
 
   if (
-    !session &&
+    !session?.user &&
     pathname !== "/login" &&
     pathname !== "/signup" &&
     pathname !== "/"
@@ -14,7 +15,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", origin));
   }
 
-  if (session && pathname === "/") {
+  if (session?.user && pathname === "/") {
     return NextResponse.redirect(new URL("/sessions", origin));
   }
 
